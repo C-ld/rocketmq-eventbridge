@@ -1,0 +1,246 @@
+import Util
+import Credential
+import OpenApi
+import OpenApiUtil;
+import EndpointUtil;
+
+extends OpenApi;
+
+function getEndpoint(productId: string, regionId: string, endpointRule: string, network: string, suffix: string, endpointMap: map[string]string, endpoint: string) throws: string{
+  if (!Util.empty(endpoint)) {
+    return endpoint;
+  }
+  
+  if (!Util.isUnset(endpointMap) && !Util.empty(endpointMap[regionId])) {
+    return endpointMap[regionId];
+  }
+  return EndpointUtil.getEndpointRules(productId, regionId, endpointRule, network, suffix);
+}
+
+init(config: OpenApi.Config){
+  super(config);
+  @endpointRule = '';
+  
+  checkConfig(config);
+  @endpoint = getEndpoint('eventbridge', @regionId, @endpointRule, @network, @suffix, @endpointMap, @endpoint);
+}
+
+
+
+model ListEventBusesRequest {
+  maxResults?: int32(name='maxResults', description='The maximum number of entries to be returned in a call. You can use this parameter and NextToken to implement paging. Note: Up to 100 entries can be returned in a call.', example='10'),
+  nextToken?: string(name='nextToken', description='If you set Limit and excess return values exist, this parameter is returned.', example='10'),
+}
+
+model ListEventBusesResponseBody {
+  code?: string(name='code', description='The returned HTTP status code. The HTTP status code 200 indicates that the request is successful.', example='200'),
+  eventBuses?: [ 
+    {
+      description?: string(name='description', description='The description of the queried event bus.', example='bus_description'),
+      eventBusName?: string(name='eventBusName', description='The name of the queried event bus.', example='default'),
+    }
+  ](name='eventBuses', description='The timestamp that indicates when the event bus was created.'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='10'),
+  total?: int32(name='total', description='The total number of entries.', example='2'),
+  message?: string(name='message', description='The returned error message.', example='InvalidArgument'),
+  requestId?: string(name='requestId', description='The request ID.', example='D1DCF64A-3F2C-5323-ADCB-3F4DF30FAD2D'),
+  maxResults?: int32(name="maxResults", description='If you set Limit and excess return values exist, this parameter is returned.', example='10')
+}
+
+model ListEventBusesResponse {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: ListEventBusesResponseBody(name='body'),
+}
+
+/**
+ * @summary Queries all event buses.
+ *
+ * @description You can call this API operation to query all event buses.
+ *
+ * @param request ListEventBusesRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return ListEventBusesResponse
+ */
+async function listEventBusesWithOptions(request: ListEventBusesRequest, runtime: Util.RuntimeOptions): ListEventBusesResponse {
+  Util.validateModel(request);
+  var query = {};
+  if (!Util.isUnset(request.maxResults)) {
+    query['maxResults'] = request.maxResults;
+  }
+  if (!Util.isUnset(request.nextToken)) {
+    query['nextToken'] = request.nextToken;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(query),
+    query = OpenApiUtil.query(query)
+  };
+
+  var params = new OpenApi.Params{
+    action = 'ListEventBuses',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/bus/listEventBuses',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Queries all event buses.
+ *
+ * @description You can call this API operation to query all event buses.
+ *
+ * @param request ListEventBusesRequest
+ * @return ListEventBusesResponse
+ */
+async function listEventBuses(request: ListEventBusesRequest): ListEventBusesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventBusesWithOptions(request, runtime);
+}
+
+
+
+
+
+
+model CreateEventBusRequest {
+  description?: string(name='description', description='The description of the event bus.', example='demo'),
+  eventBusName?: string(name='eventBusName', description='The name of the event bus. This parameter is required.', example='MyEventBus'),
+}
+
+model CreateEventBusResponseBody {
+  code?: string(name='code', description='The returned response code. The value Success indicates that the request is successful. Other values indicate that the request failed. For more information about error codes, see Error codes.', example='Success'),
+  data?: {
+    eventBusARN?: string(name='eventBusARN', description='The Alibaba Cloud Resource Name (ARN) of the event bus.', example='acs:eventbridge:cn-hangzhou:123456789098****:eventbus/MyEventBus'),
+  }(name='data', description='The returned data.'),
+  message?: string(name='message', description='The returned error message.', example='The event bus [xxxx] not existed!'),
+  requestId?: string(name='requestId', description='The request ID.', example='A995F07C-E503-5881-9962-9CECA8566876'),
+  success?: boolean(name='success', description='Indicates whether the request is successful. The value true indicates that the request is successful.', example='true'),
+}
+
+model CreateEventBusResponse {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: CreateEventBusResponseBody(name='body'),
+}
+
+/**
+ * @summary Creates an event bus.
+ *
+ * @description You can call this API operation to create an event bus.
+ *
+ * @param request CreateEventBusRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return CreateEventBusResponse
+ */
+async function createEventBusWithOptions(request: CreateEventBusRequest, runtime: Util.RuntimeOptions): CreateEventBusResponse {
+  Util.validateModel(request);
+  var query = {};
+  if (!Util.isUnset(request.description)) {
+    query['description'] = request.description;
+  }
+  if (!Util.isUnset(request.eventBusName)) {
+    query['eventBusName'] = request.eventBusName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    // query = OpenApiUtil.query(query),
+    body = Util.toJSONString(query)
+  };
+  var params = new OpenApi.Params{
+    action = 'CreateEventBus',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/bus/createEventBus',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Creates an event bus.
+ *
+ * @description You can call this API operation to create an event bus.
+ *
+ * @param request CreateEventBusRequest
+ * @return CreateEventBusResponse
+ */
+async function createEventBus(request: CreateEventBusRequest): CreateEventBusResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventBusWithOptions(request, runtime);
+}
+
+
+
+model GetEventBusRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus. This parameter is required.', example='MyEventBus'),
+}
+
+model GetEventBusResponseBody = {
+  code?: string(name='code', description='The response code. The value Success indicates that the request is successful.', example='Success'),
+  createTimestamp?: long(name='createTimestamp', description='The timestamp that indicates when the event bus was created.', example='1641781825000'),
+  description?: string(name='description', description='The description of the event bus.', example='demo'),
+  eventBusName?: string(name='eventBusName', description='The name of the event bus.', example='MyEventBus'),
+  message?: string(name='message', description='The error message that is returned if the request failed.', example='EventBusNotExist'),
+  requestId?: string(name='requestId', description='The request ID.', example='d5bfc188-4452-4ba7-b73a-a9005e522439'),
+}
+
+model GetEventBusResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: GetEventBusResponseBody(name='body'),
+}
+
+/**
+ * @summary Queries the detailed information about an event bus.
+ *
+ * @description You can call this API operation to query the detailed information about an event bus.
+ *
+ * @param request GetEventBusRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return GetEventBusResponse
+ */
+async function getEventBusWithOptions(request: GetEventBusRequest, runtime: Util.RuntimeOptions): GetEventBusResponse {
+  Util.validateModel(request);
+  var query = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    query['eventBusName'] = request.eventBusName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(query),
+    query = OpenApiUtil.query(query)
+  };
+  var params = new OpenApi.Params{
+    action = 'GetEventBus',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/bus/getEventBus',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Queries the detailed information about an event bus.
+ *
+ * @description You can call this API operation to query the detailed information about an event bus.
+ *
+ * @param request GetEventBusRequest
+ * @return GetEventBusResponse
+ */
+async function getEventBus(request: GetEventBusRequest): GetEventBusResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventBusWithOptions(request, runtime);
+}
