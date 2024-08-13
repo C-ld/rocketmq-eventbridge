@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.eventbridge</groupId>
+  <groupId>org.apache.rocketmq</groupId>
   <artifactId>sdk</artifactId>
-  <version>1.0.0</version>
+  <version>0.0.0</version>
   <packaging>jar</packaging>
   <name>sdk</name>
-  <description>EventBridge SDK for Java
+  <description>Eventbridge (20240701) SDK for Java
     </description>
-  <url></url>
+  <url/>
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -17,8 +17,8 @@
   </licenses>
   <developers>
     <developer>
-      <id>ludi</id>
-      <name>EventBridge SDK</name>
+      <id>rocketmq</id>
+      <name>rocketmq</name>
       <email>zjuludi@gmail.com</email>
     </developer>
   </developers>
@@ -33,25 +33,20 @@
     </repository>
   </distributionManagement>
   <scm>
-    <connection></connection>
-    <developerConnection></developerConnection>
-    <url></url>
+    <connection/>
+    <developerConnection/>
+    <url/>
   </scm>
   <dependencies>
     <dependency>
       <groupId>com.aliyun</groupId>
       <artifactId>tea-util</artifactId>
-      <version>0.2.22</version>
-    </dependency>
-    <dependency>
-      <groupId>com.aliyun</groupId>
-      <artifactId>credentials-java</artifactId>
-      <version>0.3.0</version>
+      <version>0.2.23</version>
     </dependency>
     <dependency>
       <groupId>com.aliyun</groupId>
       <artifactId>tea-openapi</artifactId>
-      <version>0.3.4</version>
+      <version>0.3.5</version>
     </dependency>
     <dependency>
       <groupId>com.aliyun</groupId>
@@ -62,6 +57,11 @@
       <groupId>com.aliyun</groupId>
       <artifactId>endpoint-util</artifactId>
       <version>0.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>tea-console</artifactId>
+      <version>0.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.aliyun</groupId>
@@ -76,14 +76,17 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.6.1</version>
         <configuration>
-          <source>7</source>
-          <target>7</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.6</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
         <executions>
           <execution>
             <id>sign-artifacts</id>

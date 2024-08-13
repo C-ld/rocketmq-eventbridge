@@ -1,8 +1,16 @@
 // This file is auto-generated, don't edit it. Thanks.
-package com.eventbridge.sdk.models;
+package org.apache.rocketmq.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * <b>description</b> :
+ * <p>EventBus Controller apis:
+ * createEventBus
+ * getEventBus
+ * deleteEventBus
+ * listEventBuses</p>
+ */
 public class CreateEventBusRequest extends TeaModel {
     /**
      * <p>The description of the event bus.</p>

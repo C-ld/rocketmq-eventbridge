@@ -1,38 +1,103 @@
 {
-  "scope": "myDemo",
-  "name": "demo",
+  "scope": "SDKClient",
+  "name": "sdk-client",
   "version": "1.0.0",
   "main": "./main.dara",
   "libraries": {
     "Util": "darabonba:Util:*",
-		"XML": "darabonba:XML:*",
-		"FileForm": "darabonba:FileForm:*",
-		"Credential": "alibabacloud:Credential:*",
     "OpenApi": "alibabacloud:OpenApi:*",
-    
     "OpenApiUtil": "alibabacloud:OpenApiUtil:*",
     "EndpointUtil": "alibabacloud:EndpointUtil:*",
-    "SPI": "alibabacloud:GatewaySPI:*",
-    "GatewayClient": "alibabacloud:GatewayPOP:*",
-    "Paginator": "alibabacloud:Paginator:*"
+    "Console": "darabonba:Console:*"
   },
   "java": {
-    "package": "com.eventbridge.sdk",
-    "className": "SDKClient",
+    "className": "Client",
+    "package": "org.apache.rocketmq.eventbridge",
+    "enableMinimizeModelName": false,
     "packageInfo": {
-      "groupId": "com.eventbridge",
+      "groupId": "org.apache.rocketmq",
       "artifactId": "sdk",
-      "version": "1.0.0",
-      "description": "EventBridge SDK for Java",
+      "version": "0.0.0",
+      "description": "Eventbridge (20240701) SDK for Java",
       "url": "",
       "licenseName": "The Apache License, Version 2.0",
       "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.txt",
-      "developerId": "ludi",
-      "developerName": "EventBridge SDK",
-      "developerEmail": "zjuludi@gmail.com",
-      "scmConnection": "",
-      "scmDeveloperConnection": "",
-      "scmUrl": ""
+      "developerId": "rocketmq",
+      "developerName": "rocketmq",
+      "developerEmail": "zjuludi@gmail.com"
     }
-  }
+  },
+  "csharp": {
+    "className": "Client",
+    "namespace": "AlibabaCloud.SDK.Eventbridge20240701",
+    "packageInfo": {
+      "name": "eventbridge",
+      "title": "alibabacloud-eventbridge",
+      "description": "Alibaba Cloud eventbridge (20240701) SDK Library for .NET",
+      "company": "Alibaba Cloud",
+      "property": {
+        "PackageTags": "Alibaba Aliyun eventbridge SDK",
+        "Copyright": "©2009-present Alibaba Cloud",
+        "PackageProjectUrl": "https://github.com/aliyun/alibabacloud-csharp-sdk",
+        "PackageIconUrl": "https://www.alibabacloud.com/favicon.ico"
+      }
+    }
+  },
+  "php": {
+    "package": "AlibabaCloud.SDK.Eventbridge.V20240701",
+    "clientName": "Eventbridge",
+    "packageInfo": {
+      "name": "alibabacloud/eventbridge-20240701",
+      "desc": "Alibaba Cloud eventbridge (20240701) SDK Library for PHP",
+      "github": "https://github.com/aliyun/alibabacloud-php-sdk",
+      "files": {
+        "LICENSE": "../LICENSE"
+      }
+    }
+  },
+  "python": {
+    "package": "alibabacloud_eventbridge20240701",
+    "clientName": "client",
+    "packageInfo": {
+      "name": "alibabacloud_eventbridge20240701",
+      "desc": "Alibaba Cloud eventbridge (20240701) SDK Library for Python",
+      "github": "https://github.com/aliyun/alibabacloud-python-sdk",
+      "author": "Alibaba Cloud SDK",
+      "email": "sdk-team@alibabacloud.com"
+    }
+  },
+  "python2": {
+    "package": "alibabacloud_eventbridge20240701",
+    "clientName": "client",
+    "packageInfo": {
+      "name": "alibabacloud_eventbridge20240701_py2",
+      "desc": "Alibaba Cloud eventbridge (20240701) SDK Library for Python2",
+      "github": "https://github.com/aliyun/alibabacloud-python2-sdk",
+      "author": "Alibaba Cloud SDK",
+      "email": "sdk-team@alibabacloud.com"
+    }
+  },
+  "cpp": {
+    "packageInfo": {
+      "git": {
+        "scope": "alibabacloud-sdk-cpp",
+        "project": "eventbridge-20240701"
+      }
+    }
+  },
+  "swift": {
+    "clientName": "Client",
+    "packageInfo": {
+      "name": "AlibabacloudEventbridge20240701",
+      "desc": "Alibaba Cloud eventbridge (20240701) SDK Library for Swift",
+      "github": "https://github.com/alibabacloud-sdk-swift/eventbridge-20240701",
+      "author": "Alibaba Cloud SDK",
+      "email": "sdk-team@alibabacloud.com"
+    }
+  },
+  "go": {
+    "mapAndSliceWithoutOmitempty": false
+  },
+  "productId": "eventbridge",
+  "apiVersions": "2020-04-01"
 }

@@ -1,5 +1,5 @@
 // This file is auto-generated, don't edit it. Thanks.
-package com.eventbridge.sdk.models;
+package org.apache.rocketmq.eventbridge.models;
 
 import com.aliyun.tea.*;
 
