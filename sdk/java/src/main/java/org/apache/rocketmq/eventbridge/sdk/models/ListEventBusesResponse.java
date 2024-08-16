@@ -1,9 +1,9 @@
 // This file is auto-generated, don't edit it. Thanks.
-package org.apache.rocketmq.eventbridge.models;
+package org.apache.rocketmq.eventbridge.sdk.models;
 
 import com.aliyun.tea.*;
 
-public class CreateEventBusResponse extends TeaModel {
+public class ListEventBusesResponse extends TeaModel {
     @NameInMap("headers")
     public java.util.Map<String, String> headers;
 
@@ -11,14 +11,14 @@ public class CreateEventBusResponse extends TeaModel {
     public Integer statusCode;
 
     @NameInMap("body")
-    public CreateEventBusResponseBody body;
+    public ListEventBusesResponseBody body;
 
-    public static CreateEventBusResponse build(java.util.Map<String, ?> map) throws Exception {
-        CreateEventBusResponse self = new CreateEventBusResponse();
+    public static ListEventBusesResponse build(java.util.Map<String, ?> map) throws Exception {
+        ListEventBusesResponse self = new ListEventBusesResponse();
         return TeaModel.build(map, self);
     }
 
-    public CreateEventBusResponse setHeaders(java.util.Map<String, String> headers) {
+    public ListEventBusesResponse setHeaders(java.util.Map<String, String> headers) {
         this.headers = headers;
         return this;
     }
@@ -26,7 +26,7 @@ public class CreateEventBusResponse extends TeaModel {
         return this.headers;
     }
 
-    public CreateEventBusResponse setStatusCode(Integer statusCode) {
+    public ListEventBusesResponse setStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
         return this;
     }
@@ -34,11 +34,11 @@ public class CreateEventBusResponse extends TeaModel {
         return this.statusCode;
     }
 
-    public CreateEventBusResponse setBody(CreateEventBusResponseBody body) {
+    public ListEventBusesResponse setBody(ListEventBusesResponseBody body) {
         this.body = body;
         return this;
     }
-    public CreateEventBusResponseBody getBody() {
+    public ListEventBusesResponseBody getBody() {
         return this.body;
     }
 

@@ -12,7 +12,7 @@
   },
   "java": {
     "className": "Client",
-    "package": "org.apache.rocketmq.eventbridge",
+    "package": "org.apache.rocketmq.eventbridge.sdk",
     "enableMinimizeModelName": false,
     "packageInfo": {
       "groupId": "org.apache.rocketmq",

@@ -1,26 +1,26 @@
 // This file is auto-generated, don't edit it. Thanks.
-package org.apache.rocketmq.eventbridge.demo;
+package org.apache.rocketmq.eventbridge.sdk;
 
 import com.aliyun.tea.*;
 
 public class CreateEventBusDemo {
 
     public com.aliyun.teaopenapi.models.Config _config;
-    public org.apache.rocketmq.eventbridge.Client _client;
+    public org.apache.rocketmq.eventbridge.sdk.Client _client;
     public CreateEventBusDemo() throws Exception {
         this._config = com.aliyun.teaopenapi.models.Config.build(TeaConverter.buildMap(
             new TeaPair("endpoint", "127.0.0.1:7001")
         ));
-        this._client = new org.apache.rocketmq.eventbridge.Client(_config);
+        this._client = new org.apache.rocketmq.eventbridge.sdk.Client(_config);
     }
 
 
     public void testCreateEventBus() throws Exception {
-        org.apache.rocketmq.eventbridge.models.CreateEventBusRequest request = org.apache.rocketmq.eventbridge.models.CreateEventBusRequest.build(TeaConverter.buildMap(
+        org.apache.rocketmq.eventbridge.sdk.models.CreateEventBusRequest request = org.apache.rocketmq.eventbridge.sdk.models.CreateEventBusRequest.build(TeaConverter.buildMap(
             new TeaPair("eventBusName", "newBus")
         ));
         try {
-            org.apache.rocketmq.eventbridge.models.CreateEventBusResponse res = _client.createEventBus(request);
+            org.apache.rocketmq.eventbridge.sdk.models.CreateEventBusResponse res = _client.createEventBus(request);
             com.aliyun.teaconsole.Client.log(com.aliyun.teautil.Common.toJSONString(res.body));
         } catch (TeaException err) {
             com.aliyun.teaconsole.Client.log("err!");
@@ -35,11 +35,11 @@ public class CreateEventBusDemo {
     }
 
     public static void main(String args[]){
-        try {
+        try{
             CreateEventBusDemo demo = new CreateEventBusDemo();
             demo.testCreateEventBus();
-        } catch(Exception e){
-            // TODO: deal with exception
+        } catch (Exception e){
+            //TODO: handle the exception
         }
     }
 }

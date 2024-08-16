@@ -12,8 +12,8 @@
     "Console": "darabonba:Console:*"
   },
   "java": {
-    "package": "org.apache.rocketmq.eventbridge.demo",
-    "className": "ListEventBusesDemo",
+    "package": "org.apache.rocketmq.eventbridge.sdk",
+    "className": "DeleteEventBusDemo",
     "packageInfo": {
       "groupId": "org.apache.rocketmq.eventbridge",
       "artifactId": "demo",

@@ -1,8 +1,8 @@
 // This file is auto-generated, don't edit it. Thanks.
-package org.apache.rocketmq.eventbridge;
+package org.apache.rocketmq.eventbridge.sdk;
 
 import com.aliyun.tea.*;
-import org.apache.rocketmq.eventbridge.models.*;
+import org.apache.rocketmq.eventbridge.sdk.models.*;
 
 public class Client extends com.aliyun.teaopenapi.Client {
 
