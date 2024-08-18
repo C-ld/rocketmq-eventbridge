@@ -23,7 +23,33 @@ public class Client extends com.aliyun.teaopenapi.Client {
             return endpointMap.get(regionId);
         }
 
-        return com.aliyun.endpointutil.Client.getEndpointRules(productId, regionId, endpointRule, network, suffix);
+        String result = "";
+        if (!com.aliyun.teautil.Common.empty(network) && !com.aliyun.teautil.Common.equalString(network, "public")) {
+            network = "-" + network + "";
+        } else {
+            network = "";
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(suffix)) {
+            suffix = "";
+        } else {
+            suffix = "-" + suffix + "";
+        }
+
+        if (com.aliyun.teautil.Common.equalString(endpointRule, "regional")) {
+            if (com.aliyun.teautil.Common.empty(regionId)) {
+                throw new TeaException(TeaConverter.buildMap(
+                    new TeaPair("message", "RegionId is empty, please set a valid RegionId")
+                ));
+            }
+
+            result = "" + productId + "" + suffix + "" + network + "." + regionId + ".aliyuncs.com";
+        } else {
+            result = "" + productId + "" + suffix + "" + network + ".aliyuncs.com";
+        }
+
+        return result;
+        // return EndpointUtil.getEndpointRules(productId, regionId, endpointRule, network, suffix);
     }
 
     /**
@@ -39,17 +65,17 @@ public class Client extends com.aliyun.teaopenapi.Client {
      */
     public CreateEventBusResponse createEventBusWithOptions(CreateEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
         com.aliyun.teautil.Common.validateModel(request);
-        java.util.Map<String, Object> query = new java.util.HashMap<>();
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
         if (!com.aliyun.teautil.Common.isUnset(request.description)) {
-            query.put("description", request.description);
+            body.put("description", request.description);
         }
 
         if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
-            query.put("eventBusName", request.eventBusName);
+            body.put("eventBusName", request.eventBusName);
         }
 
         com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
-            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(query))
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
         ));
         com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
             new TeaPair("action", "CreateEventBus"),
@@ -93,13 +119,13 @@ public class Client extends com.aliyun.teaopenapi.Client {
      */
     public GetEventBusResponse getEventBusWithOptions(GetEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
         com.aliyun.teautil.Common.validateModel(request);
-        java.util.Map<String, Object> query = new java.util.HashMap<>();
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
         if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
-            query.put("eventBusName", request.eventBusName);
+            body.put("eventBusName", request.eventBusName);
         }
 
         com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
-            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(query))
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
         ));
         com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
             new TeaPair("action", "GetEventBus"),
@@ -143,17 +169,17 @@ public class Client extends com.aliyun.teaopenapi.Client {
      */
     public ListEventBusesResponse listEventBusesWithOptions(ListEventBusesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
         com.aliyun.teautil.Common.validateModel(request);
-        java.util.Map<String, Object> query = new java.util.HashMap<>();
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
         if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
-            query.put("maxResults", request.maxResults);
+            body.put("maxResults", request.maxResults);
         }
 
         if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
-            query.put("nextToken", request.nextToken);
+            body.put("nextToken", request.nextToken);
         }
 
         com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
-            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(query))
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
         ));
         com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
             new TeaPair("action", "ListEventBuses"),
@@ -197,13 +223,13 @@ public class Client extends com.aliyun.teaopenapi.Client {
      */
     public DeleteEventBusResponse deleteEventBusWithOptions(DeleteEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
         com.aliyun.teautil.Common.validateModel(request);
-        java.util.Map<String, Object> query = new java.util.HashMap<>();
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
         if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
-            query.put("eventBusName", request.eventBusName);
+            body.put("eventBusName", request.eventBusName);
         }
 
         com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
-            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(query))
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
         ));
         com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
             new TeaPair("action", "DeleteEventBus"),
@@ -232,5 +258,659 @@ public class Client extends com.aliyun.teaopenapi.Client {
     public DeleteEventBusResponse deleteEventBus(DeleteEventBusRequest request) throws Exception {
         com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
         return this.deleteEventBusWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to create an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an API destination.</p>
+     * 
+     * @param request CreateApiDestinationRequest (tmpReq before)
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return CreateApiDestinationResponse
+     */
+    public CreateApiDestinationResponse createApiDestinationWithOptions(CreateApiDestinationRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.apiDestinationName)) {
+            body.put("apiDestinationName", request.apiDestinationName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.httpApiParameters)) {
+            body.put("httpApiParameters", request.httpApiParameters);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.invocationRateLimitPerSecond)) {
+            body.put("invocationRateLimitPerSecond", request.invocationRateLimitPerSecond);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "CreateApiDestination"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/api-destination/createApiDestination"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new CreateApiDestinationResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to create an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an API destination.</p>
+     * 
+     * @param request CreateApiDestinationRequest
+     * @return CreateApiDestinationResponse
+     */
+    public CreateApiDestinationResponse createApiDestination(CreateApiDestinationRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.createApiDestinationWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to update an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an API destination.</p>
+     * 
+     * @param request UpdateApiDestinationRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return UpdateApiDestinationResponse
+     */
+    public UpdateApiDestinationResponse updateApiDestinationWithOptions(UpdateApiDestinationRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.apiDestinationName)) {
+            body.put("apiDestinationName", request.apiDestinationName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.httpApiParameters)) {
+            body.put("httpApiParameters", request.httpApiParameters);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.invocationRateLimitPerSecond)) {
+            body.put("invocationRateLimitPerSecond", request.invocationRateLimitPerSecond);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "UpdateApiDestination"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/api-destination/updateApiDestination"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new UpdateApiDestinationResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to update an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an API destination.</p>
+     * 
+     * @param request UpdateApiDestinationRequest
+     * @return UpdateApiDestinationResponse
+     */
+    public UpdateApiDestinationResponse updateApiDestination(UpdateApiDestinationRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.updateApiDestinationWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the information about an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the information about an API destination.</p>
+     * 
+     * @param request GetApiDestinationRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return GetApiDestinationResponse
+     */
+    public GetApiDestinationResponse getApiDestinationWithOptions(GetApiDestinationRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.apiDestinationName)) {
+            body.put("apiDestinationName", request.apiDestinationName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "GetApiDestination"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/api-destination/getApiDestination"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new GetApiDestinationResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the information about an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the information about an API destination.</p>
+     * 
+     * @param request GetApiDestinationRequest
+     * @return GetApiDestinationResponse
+     */
+    public GetApiDestinationResponse getApiDestination(GetApiDestinationRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.getApiDestinationWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an API destination.</p>
+     * 
+     * @param request DeleteApiDestinationRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DeleteApiDestinationResponse
+     */
+    public DeleteApiDestinationResponse deleteApiDestinationWithOptions(DeleteApiDestinationRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.apiDestinationName)) {
+            body.put("apiDestinationName", request.apiDestinationName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DeleteApiDestination"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/api-destination/deleteApiDestination"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DeleteApiDestinationResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete an API destination.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an API destination.</p>
+     * 
+     * @param request DeleteApiDestinationRequest
+     * @return DeleteApiDestinationResponse
+     */
+    public DeleteApiDestinationResponse deleteApiDestination(DeleteApiDestinationRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.deleteApiDestinationWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can use this API operation to query a list of API destinations.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries a list of API destinations.</p>
+     * 
+     * @param request ListApiDestinationsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListApiDestinationsResponse
+     */
+    public ListApiDestinationsResponse listApiDestinationsWithOptions(ListApiDestinationsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.apiDestinationNamePrefix)) {
+            body.put("apiDestinationNamePrefix", request.apiDestinationNamePrefix);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
+            body.put("maxResults", request.maxResults);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
+            body.put("nextToken", request.nextToken);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "ListApiDestinations"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/api-destination/listApiDestinations"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListApiDestinationsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can use this API operation to query a list of API destinations.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries a list of API destinations.</p>
+     * 
+     * @param request ListApiDestinationsRequest
+     * @return ListApiDestinationsResponse
+     */
+    public ListApiDestinationsResponse listApiDestinations(ListApiDestinationsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listApiDestinationsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to create a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates a connection.</p>
+     * 
+     * @param request CreateConnectionRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return CreateConnectionResponse
+     */
+    public CreateConnectionResponse createConnectionWithOptions(CreateConnectionRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.authParameters)) {
+            body.put("authParameters", request.authParameters);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.networkParameters)) {
+            body.put("networkParameters", request.networkParameters);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "CreateConnection"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/createConnection"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new CreateConnectionResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to create a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates a connection.</p>
+     * 
+     * @param request CreateConnectionRequest
+     * @return CreateConnectionResponse
+     */
+    public CreateConnectionResponse createConnection(CreateConnectionRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.createConnectionWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes a connection.</p>
+     * 
+     * @param request DeleteConnectionRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DeleteConnectionResponse
+     */
+    public DeleteConnectionResponse deleteConnectionWithOptions(DeleteConnectionRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DeleteConnection"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/deleteConnection"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DeleteConnectionResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes a connection.</p>
+     * 
+     * @param request DeleteConnectionRequest
+     * @return DeleteConnectionResponse
+     */
+    public DeleteConnectionResponse deleteConnection(DeleteConnectionRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.deleteConnectionWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to update a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates a connection.</p>
+     * 
+     * @param request UpdateConnectionRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return UpdateConnectionResponse
+     */
+    public UpdateConnectionResponse updateConnectionWithOptions(UpdateConnectionRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.authParameters)) {
+            body.put("authParameters", request.authParameters);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.networkParameters)) {
+            body.put("networkParameters", request.networkParameters);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "UpdateConnection"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/updateConnection"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new UpdateConnectionResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to update a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates a connection.</p>
+     * 
+     * @param request UpdateConnectionRequest
+     * @return UpdateConnectionResponse
+     */
+    public UpdateConnectionResponse updateConnection(UpdateConnectionRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.updateConnectionWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the configurations of a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the configurations of a connection.</p>
+     * 
+     * @param request GetConnectionRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return GetConnectionResponse
+     */
+    public GetConnectionResponse getConnectionWithOptions(GetConnectionRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "GetConnection"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/getConnection"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new GetConnectionResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the configurations of a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the configurations of a connection.</p>
+     * 
+     * @param request GetConnectionRequest
+     * @return GetConnectionResponse
+     */
+    public GetConnectionResponse getConnection(GetConnectionRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.getConnectionWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the configurations of a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the configurations of a connection.</p>
+     * 
+     * @param request GetConnectionRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return GetConnectionResponse
+     */
+    public GetConnectionResponse selectOneConnectionWithOptions(GetConnectionRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionName)) {
+            body.put("connectionName", request.connectionName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "selectOneConnection"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/selectOneConnection"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new GetConnectionResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the configurations of a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the configurations of a connection.</p>
+     * 
+     * @param request GetConnectionRequest
+     * @return GetConnectionResponse
+     */
+    public GetConnectionResponse selectOneConnection(GetConnectionRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.selectOneConnectionWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query connections.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries connections.</p>
+     * 
+     * @param request ListConnectionsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListConnectionsResponse
+     */
+    public ListConnectionsResponse listConnectionsWithOptions(ListConnectionsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.connectionNamePrefix)) {
+            body.put("connectionNamePrefix", request.connectionNamePrefix);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
+            body.put("maxResults", request.maxResults);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
+            body.put("nextToken", request.nextToken);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "ListConnections"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/listConnections"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListConnectionsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query connections.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries connections.</p>
+     * 
+     * @param request ListConnectionsRequest
+     * @return ListConnectionsResponse
+     */
+    public ListConnectionsResponse listConnections(ListConnectionsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listConnectionsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to update a connection.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates a connection.</p>
+     * @return ListEnumsResponseResponse
+     */
+    public ListEnumsResponseResponse listEnumsResponse() throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "listEnumsResponse"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/connection/listEnumsResponse"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListEnumsResponseResponse());
     }
 }

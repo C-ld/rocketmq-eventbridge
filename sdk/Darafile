@@ -5,17 +5,25 @@
   "main": "./main.dara",
   "libraries": {
     "Util": "darabonba:Util:*",
-    "OpenApi": "alibabacloud:OpenApi:*",
-    "OpenApiUtil": "alibabacloud:OpenApiUtil:*",
-    "EndpointUtil": "alibabacloud:EndpointUtil:*",
-    "Console": "darabonba:Console:*"
+    "OpenApi": "alibabacloud:OpenApi:*"
+  },
+  "releases": {
+    "java": "org.apache.rocketmq.eventbridge:sdk:0.0.0",
+    "go": "github.com/org-apache-rocketmq/eventbridge-sdk/client:v0.0.0",
+    "csharp": "org.apache.rocketmq.eventbridge:0.0.0",
+    "ts": "@org.apache.rocketmq/eventbridge-sdk:0.0.0",
+    "php": "alibabacloud/eventbridge-20200401:2.1.5",
+    "python": "alibabacloud_eventbridge20200401:4.1.6",
+    "python2": "alibabacloud_eventbridge20200401_py2:3.0.0",
+    "swift": "alibabacloud-sdk-swift/eventbridge-20200401:1.0.0"
+    
   },
   "java": {
     "className": "Client",
     "package": "org.apache.rocketmq.eventbridge.sdk",
     "enableMinimizeModelName": false,
     "packageInfo": {
-      "groupId": "org.apache.rocketmq",
+      "groupId": "org.apache.rocketmq.eventbridge",
       "artifactId": "sdk",
       "version": "0.0.0",
       "description": "Eventbridge (20240701) SDK for Java",
@@ -26,6 +34,9 @@
       "developerName": "rocketmq",
       "developerEmail": "zjuludi@gmail.com"
     }
+  },
+  "ts":{
+    "packageName": "SDKClient"
   },
   "csharp": {
     "className": "Client",
@@ -96,8 +107,9 @@
     }
   },
   "go": {
-    "mapAndSliceWithoutOmitempty": false
+    "interface": true,
+    "clientName": "Client"
   },
   "productId": "eventbridge",
-  "apiVersions": "2020-04-01"
+  "apiVersions": "2024-07-01"
 }

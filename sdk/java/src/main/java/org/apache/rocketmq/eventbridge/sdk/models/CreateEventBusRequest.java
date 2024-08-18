@@ -6,10 +6,10 @@ import com.aliyun.tea.*;
 /**
  * <b>description</b> :
  * <p>EventBus Controller apis:
- * createEventBus
- * getEventBus
- * deleteEventBus
- * listEventBuses</p>
+ * createEventBus *
+ * getEventBus    *
+ * deleteEventBus *
+ * listEventBuses *</p>
  */
 public class CreateEventBusRequest extends TeaModel {
     /**

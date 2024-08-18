@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.rocketmq.eventbridge</groupId>
-  <artifactId>sdk</artifactId>
+  <artifactId>demo</artifactId>
   <version>0.0.0</version>
   <packaging>jar</packaging>
-  <name>sdk</name>
-  <description>Eventbridge (20240701) SDK for Java
+  <name>demo</name>
+  <description>EventBridge SDK demo for Java
     </description>
   <url/>
   <licenses>
@@ -17,8 +17,8 @@
   </licenses>
   <developers>
     <developer>
-      <id>rocketmq</id>
-      <name>rocketmq</name>
+      <id>ludi</id>
+      <name>EventBridge SDK</name>
       <email>zjuludi@gmail.com</email>
     </developer>
   </developers>
@@ -49,9 +49,14 @@
       <version>0.3.5</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.rocketmq.eventbridge</groupId>
+      <artifactId>sdk</artifactId>
+      <version>0.0.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.aliyun</groupId>
-      <artifactId>openapiutil</artifactId>
-      <version>0.2.1</version>
+      <artifactId>tea-console</artifactId>
+      <version>0.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.aliyun</groupId>
@@ -74,9 +79,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.6</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
         <executions>
           <execution>
             <id>sign-artifacts</id>

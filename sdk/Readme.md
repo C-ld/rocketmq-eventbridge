@@ -6,7 +6,9 @@
 
 ## dara 安装
 
-TODO
+```
+npm install @darabonba/cli -g
+```
 
 ## 生成代码
 
