@@ -26,7 +26,7 @@ public class ListApiDestinationsResponseBody extends TeaModel {
      * <p>10</p>
      */
     @NameInMap("maxResults")
-    public Float maxResults;
+    public Integer maxResults;
 
     /**
      * <p>If excess return values exist, this parameter is returned.</p>
@@ -44,7 +44,7 @@ public class ListApiDestinationsResponseBody extends TeaModel {
      * <p>2</p>
      */
     @NameInMap("total")
-    public Float total;
+    public Integer total;
 
     /**
      * <p>The returned message. If the request is successful, success is returned. If the request failed, an error code is returned.</p>
@@ -85,11 +85,11 @@ public class ListApiDestinationsResponseBody extends TeaModel {
         return this.apiDestinations;
     }
 
-    public ListApiDestinationsResponseBody setMaxResults(Float maxResults) {
+    public ListApiDestinationsResponseBody setMaxResults(Integer maxResults) {
         this.maxResults = maxResults;
         return this;
     }
-    public Float getMaxResults() {
+    public Integer getMaxResults() {
         return this.maxResults;
     }
 
@@ -101,11 +101,11 @@ public class ListApiDestinationsResponseBody extends TeaModel {
         return this.nextToken;
     }
 
-    public ListApiDestinationsResponseBody setTotal(Float total) {
+    public ListApiDestinationsResponseBody setTotal(Integer total) {
         this.total = total;
         return this;
     }
-    public Float getTotal() {
+    public Integer getTotal() {
         return this.total;
     }
 

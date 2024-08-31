@@ -7,7 +7,6 @@
     "SDKClient" : "../../",
     "Util": "darabonba:Util:*",
     "OpenApi": "alibabacloud:OpenApi:*",
-    "OpenApiUtil": "alibabacloud:OpenApiUtil:*",
     "Console": "darabonba:Console:*"
   },
   "java": {

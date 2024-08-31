@@ -101,7 +101,9 @@ async function testGetEventSource(): void {
 async function testListEventSources(): void {
     var request = new SDKClient.ListEventSourcesRequest{
         eventBusName = 'newBus',
-        eventSourceType = 'USER_DEFINED'
+        eventSourceType = 'USER_DEFINED',
+        maxResults = 10,
+        nextToken = "0"
     };
 
     try {

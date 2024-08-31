@@ -87,6 +87,7 @@ async function testUpdateEventRule(): void {
         eventBusName = 'newBus',
         eventRuleName = 'newRule',
         description = 'new description for testing update API',
+        filterPattern = '{}'
     };
 
     try {
@@ -104,7 +105,8 @@ async function testUpdateEventRule(): void {
 async function testListEventRules(): void {
     var request = new SDKClient.ListEventRulesRequest{
         eventBusName = 'newBus',
-        maxResults = 2
+        maxResults = 2,
+        nextToken = "0"
     };
 
     try {

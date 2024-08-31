@@ -14,10 +14,13 @@ public class CreateEventBusResponseBody extends TeaModel {
     public String code;
 
     /**
-     * <p>The returned data.</p>
+     * <p>The name of the event bus. This parameter is required.</p>
+     * 
+     * <strong>example:</strong>
+     * <p>MyEventBus</p>
      */
-    @NameInMap("data")
-    public CreateEventBusResponseBodyData data;
+    @NameInMap("eventBusName")
+    public String eventBusName;
 
     /**
      * <p>The returned error message.</p>
@@ -59,12 +62,12 @@ public class CreateEventBusResponseBody extends TeaModel {
         return this.code;
     }
 
-    public CreateEventBusResponseBody setData(CreateEventBusResponseBodyData data) {
-        this.data = data;
+    public CreateEventBusResponseBody setEventBusName(String eventBusName) {
+        this.eventBusName = eventBusName;
         return this;
     }
-    public CreateEventBusResponseBodyData getData() {
-        return this.data;
+    public String getEventBusName() {
+        return this.eventBusName;
     }
 
     public CreateEventBusResponseBody setMessage(String message) {
@@ -89,31 +92,6 @@ public class CreateEventBusResponseBody extends TeaModel {
     }
     public Boolean getSuccess() {
         return this.success;
-    }
-
-    public static class CreateEventBusResponseBodyData extends TeaModel {
-        /**
-         * <p>The Alibaba Cloud Resource Name (ARN) of the event bus.</p>
-         * 
-         * <strong>example:</strong>
-         * <p>acs:eventbridge:cn-hangzhou:123456789098****:eventbus/MyEventBus</p>
-         */
-        @NameInMap("eventBusARN")
-        public String eventBusARN;
-
-        public static CreateEventBusResponseBodyData build(java.util.Map<String, ?> map) throws Exception {
-            CreateEventBusResponseBodyData self = new CreateEventBusResponseBodyData();
-            return TeaModel.build(map, self);
-        }
-
-        public CreateEventBusResponseBodyData setEventBusARN(String eventBusARN) {
-            this.eventBusARN = eventBusARN;
-            return this;
-        }
-        public String getEventBusARN() {
-            return this.eventBusARN;
-        }
-
     }
 
 }

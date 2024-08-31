@@ -26,7 +26,7 @@ public class ListConnectionsResponseBody extends TeaModel {
      * <p>10</p>
      */
     @NameInMap("maxResults")
-    public Float maxResults;
+    public Integer maxResults;
 
     /**
      * <p>If excess return values exist, this parameter is returned.</p>
@@ -44,7 +44,7 @@ public class ListConnectionsResponseBody extends TeaModel {
      * <p>1</p>
      */
     @NameInMap("total")
-    public Float total;
+    public Integer total;
 
     /**
      * <p>The message returned.</p>
@@ -85,11 +85,11 @@ public class ListConnectionsResponseBody extends TeaModel {
         return this.connections;
     }
 
-    public ListConnectionsResponseBody setMaxResults(Float maxResults) {
+    public ListConnectionsResponseBody setMaxResults(Integer maxResults) {
         this.maxResults = maxResults;
         return this;
     }
-    public Float getMaxResults() {
+    public Integer getMaxResults() {
         return this.maxResults;
     }
 
@@ -101,11 +101,11 @@ public class ListConnectionsResponseBody extends TeaModel {
         return this.nextToken;
     }
 
-    public ListConnectionsResponseBody setTotal(Float total) {
+    public ListConnectionsResponseBody setTotal(Integer total) {
         this.total = total;
         return this;
     }
-    public Float getTotal() {
+    public Integer getTotal() {
         return this.total;
     }
 

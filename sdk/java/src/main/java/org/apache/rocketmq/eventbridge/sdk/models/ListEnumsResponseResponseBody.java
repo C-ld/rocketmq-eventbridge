@@ -5,10 +5,10 @@ import com.aliyun.tea.*;
 
 public class ListEnumsResponseResponseBody extends TeaModel {
     @NameInMap("authorizationTypeEnums")
-    public AuthorizationTypeEnums authorizationTypeEnums;
+    public String authorizationTypeEnums;
 
     @NameInMap("networkTypeEnums")
-    public NetworkTypeEnum networkTypeEnums;
+    public String networkTypeEnums;
 
     /**
      * <p>The returned response code.</p>
@@ -42,19 +42,19 @@ public class ListEnumsResponseResponseBody extends TeaModel {
         return TeaModel.build(map, self);
     }
 
-    public ListEnumsResponseResponseBody setAuthorizationTypeEnums(AuthorizationTypeEnums authorizationTypeEnums) {
+    public ListEnumsResponseResponseBody setAuthorizationTypeEnums(String authorizationTypeEnums) {
         this.authorizationTypeEnums = authorizationTypeEnums;
         return this;
     }
-    public AuthorizationTypeEnums getAuthorizationTypeEnums() {
+    public String getAuthorizationTypeEnums() {
         return this.authorizationTypeEnums;
     }
 
-    public ListEnumsResponseResponseBody setNetworkTypeEnums(NetworkTypeEnum networkTypeEnums) {
+    public ListEnumsResponseResponseBody setNetworkTypeEnums(String networkTypeEnums) {
         this.networkTypeEnums = networkTypeEnums;
         return this;
     }
-    public NetworkTypeEnum getNetworkTypeEnums() {
+    public String getNetworkTypeEnums() {
         return this.networkTypeEnums;
     }
 

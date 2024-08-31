@@ -59,9 +59,7 @@ model CreateEventBusRequest {
 
 model CreateEventBusResponseBody {
   code?: string(name='code', description='The returned response code. The value Success indicates that the request is successful. Other values indicate that the request failed. For more information about error codes, see Error codes.', example='Success'),
-  data?: {
-    eventBusARN?: string(name='eventBusARN', description='The Alibaba Cloud Resource Name (ARN) of the event bus.', example='acs:eventbridge:cn-hangzhou:123456789098****:eventbus/MyEventBus'),
-  }(name='data', description='The returned data.'),
+  eventBusName?: string(name='eventBusName', description='The name of the event bus. This parameter is required.', example='MyEventBus'),
   message?: string(name='message', description='The returned error message.', example='The event bus [xxxx] not existed!'),
   requestId?: string(name='requestId', description='The request ID.', example='A995F07C-E503-5881-9962-9CECA8566876'),
   success?: boolean(name='success', description='Indicates whether the request is successful. The value true indicates that the request is successful.', example='true'),
@@ -1434,9 +1432,9 @@ async function listConnectionsWithOptions(request: ListConnectionsRequest, runti
 }
 
 /**
- * @summary Queries connections.
+ * @summary list connections.
  *
- * @description You can call this API operation to query connections.
+ * @description You can call this API operation to list connections.
  *
  * @param request ListConnectionsRequest
  * @return ListConnectionsResponse
@@ -1446,20 +1444,20 @@ async function listConnections(request: ListConnectionsRequest): ListConnections
   return listConnectionsWithOptions(request, runtime);
 }
 
-enum AuthorizationTypeEnums : string {
-  API_KEY_AUTH(name="API_KEY_AUTH", value="API_KEY_AUTH"),
-  BASIC_AUTH(name="BASIC_AUTH", value="BASIC_AUTH"),
-  OAUTH_AUTH(name="OAUTH_AUTH", value="OAUTH_AUTH"),
-}
+// enum AuthorizationTypeEnums : string {
+//   API_KEY_AUTH(name="API_KEY_AUTH", value="API_KEY_AUTH"),
+//   BASIC_AUTH(name="BASIC_AUTH", value="BASIC_AUTH"),
+//   OAUTH_AUTH(name="OAUTH_AUTH", value="OAUTH_AUTH"),
+// }
 
-enum NetworkTypeEnum : string {
-  PUBLIC_NETWORK(name="PUBLIC_NETWORK", value="PublicNetwork"),
-  PRIVATE_NETWORK(name="PRIVATE_NETWORK", value="PrivateNetwork")
-}
+// enum NetworkTypeEnum : string {
+//   PUBLIC_NETWORK(name="PUBLIC_NETWORK", value="PublicNetwork"),
+//   PRIVATE_NETWORK(name="PRIVATE_NETWORK", value="PrivateNetwork")
+// }
 
 model ListEnumsResponseResponseBody = {
-  authorizationTypeEnums?: AuthorizationTypeEnums,
-  networkTypeEnums?: NetworkTypeEnum,
+  authorizationTypeEnums?: string(name='authorizationTypeEnums'),
+  networkTypeEnums?: string(name='networkTypeEnums'),
   code?: string(name='code', description='The returned response code.', example='Success'),
   message?: string(name='message', description='The returned message.', example='success'),
   requestId?: string(name='requestId', description='The request ID.', example='8346BE8F-40F3-533D-A0B8-1359C31BD5BA'),
@@ -1503,12 +1501,12 @@ async function listEnumsResponse(): ListEnumsResponseResponse {
     * putEvents 
 */
 
-model putEventsRequest {
+model PutEventsRequest {
   eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
   event?: string(name='event', description='The content of the event.', example='The description of the event.'),
 }
 
-model putEventsResponseBody = {
+model PutEventsResponseBody = {
   failedEntryCount?: integer(name='failedEntryCount'),
   entryList?: [
     {
@@ -1522,10 +1520,10 @@ model putEventsResponseBody = {
   requestId?: string(name='requestId', description='The request ID.', example='580A938B-6107-586C-8EC7-F22EEBEDA9E6'),
 }
 
-model putEventsResponse = {
+model PutEventsResponse = {
   headers?: map[string]string(name='headers'),
   statusCode?: int32(name='statusCode'),
-  body?: putEventsResponseBody(name='body'),
+  body?: PutEventsResponseBody(name='body'),
 }
 
 /**
@@ -1533,13 +1531,13 @@ model putEventsResponse = {
  *
  * @description You can call this API operation to query the content of an event.
  *
- * @param request putEventsRequest
+ * @param request PutEventsRequest
  * @param runtime runtime options for this request RuntimeOptions
- * @return QueryEventResponse
+ * @return PutEventsResponse
  */
-async function putEventsWithOptions(request: putEventsRequest, runtime: Util.RuntimeOptions): putEventsResponse {
+async function putEventsWithOptions(request: PutEventsRequest, runtime: Util.RuntimeOptions): PutEventsResponse {
   Util.validateModel(request);
-  var headers : map[string]any = {
+  var headers : map[string]string = {
     Content-Type = "application/json; charset=UTF-8",
     ce-specversion = "1.0",
     ce-type = "com.github.pull_request.opened",
@@ -1559,6 +1557,7 @@ async function putEventsWithOptions(request: putEventsRequest, runtime: Util.Run
   }
   var req = new OpenApi.OpenApiRequest{ 
     body = body,
+    headers = headers
   };
   var params = new OpenApi.Params{
     action = 'putEvents',
@@ -1579,10 +1578,10 @@ async function putEventsWithOptions(request: putEventsRequest, runtime: Util.Run
  *
  * @description You can call this API operation to query the content of an event.
  *
- * @param request putEventsRequest
- * @return putEventsResponse
+ * @param request PutEventsRequest
+ * @return PutEventsResponse
  */
-async function putEvents(request: putEventsRequest): QueryEventResponse {
+async function putEvents(request: PutEventsRequest): PutEventsResponse {
   var runtime = new Util.RuntimeOptions{};
   return putEventsWithOptions(request, runtime);
 }
@@ -1690,8 +1689,8 @@ model GetEventRuleResponseBody = {
   filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
     You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
   status?: string(name='status', description='The status of the event rule. Valid values: ENABLE (default): The event rule is enabled. DISABLE: The event rule is disabled.', example='ENABLE'),
-  gmtCreate?: $Date(name='gmtCreate'),
-  gmtModify?: $Date(name='gmtModify'),
+  gmtCreate?: string(name='gmtCreate'),
+  gmtModify?: string(name='gmtModify'),
   eventTargets?: [
     {
       eventTargetName?: string(name='eventTargetName'),
@@ -1841,7 +1840,7 @@ model UpdateEventRuleRequest {
   eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
   description?: string(name='description'),
   filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
-    You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
+    You can specify up to five expressions in the map data structure in each field.\nThis parameter is required.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
 }
 
 model UpdateEventRuleResponseBody = {
@@ -1927,8 +1926,8 @@ model ListEventRulesResponseBody{
       filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
         You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
       status?: string(name='status', description='The status of the event rule. Valid values: ENABLE (default): The event rule is enabled. DISABLE: The event rule is disabled.', example='ENABLE'),
-      gmtCreate?: $Date(name='gmtCreate'),
-      gmtModify?: $Date(name='gmtModify'),
+      gmtCreate?: string(name='gmtCreate'),
+      gmtModify?: string(name='gmtModify'),
     }
   ](name='eventRules'),
   total?: integer(name='total', description='The total number of entries.', example='2'),
@@ -2447,8 +2446,8 @@ model ListEventSourcesResponseBody = {
       description?: string(name='description', description='The description of the event type.', example='The description of the event type.'),
       className?: string(name='className'),
       config?: map[string]any(name='config'),
-      gmtCreate?: $Date(name='gmtCreate'),
-      gmtModify?: $Date(name='gmtModify')
+      gmtCreate?: string(name='gmtCreate'),
+      gmtModify?: string(name='gmtModify')
     }
   ](name='eventSources'),
   total?: integer(name='total', description='The total number of entries.', example='2'),
@@ -2524,28 +2523,28 @@ async function listEventSources(request: ListEventSourcesRequest): ListEventSour
     * listEventTargets   *
 */
 
+model EventTarget {
+  eventTargetName?: string(name='eventTargetName'),
+  className?: string(name='className'),
+  config?: map[string]any (name='config'),
+  runOptions?: {
+    errorsTolerance?: string(name='errorsTolerance'),
+    retryStrategy?: {
+      pushRetryStrategy?: string(name='pushRetryStrategy'),
+      maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
+      maximumRetryAttempts?: int32(name='maximumRetryAttempts')
+    }(name='retryStrategy'),
+    deadLetterQueue?: {
+      type?: string(name='type'),
+      config?: map[string]any (name='config')
+    }(name='deadLetterQueue')
+  }(name='runOptions')
+}
+
 model CreateEventTargetsRequest {
   eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
   eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
-  eventTargets?: [
-    {
-      eventTargetName?: string(name='eventTargetName'),
-      className?: string(name='className'),
-      config?: map[string]any (name='config'),
-      runOptions?: {
-        errorsTolerance?: string(name='errorsTolerance'),
-        retryStrategy?: {
-          pushRetryStrategy?: string(name='pushRetryStrategy'),
-          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
-          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
-        }(name='retryStrategy'),
-        deadLetterQueue?: {
-          type?: string(name='type'),
-          config?: map[string]any (name='config')
-        }(name='deadLetterQueue')
-      }(name='runOptions')
-    }
-  ](name='eventTargets')
+  eventTargets?: [ EventTarget ](name='eventTargets')
 }
 
 model CreateEventTargetsResponseBody = {
@@ -2616,25 +2615,7 @@ async function createEventTargets(request: CreateEventTargetsRequest): CreateEve
 model UpdateEventTargetsRequest {
   eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
   eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
-  eventTargets?: [
-    {
-      eventTargetName?: string(name='eventTargetName'),
-      className?: string(name='className'),
-      config?: map[string]any (name='config'),
-      runOptions?: {
-        errorsTolerance?: string(name='errorsTolerance'),
-        retryStrategy?: {
-          pushRetryStrategy?: string(name='pushRetryStrategy'),
-          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
-          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
-        }(name='retryStrategy'),
-        deadLetterQueue?: {
-          type?: string(name='type'),
-          config?: map[string]any (name='config')
-        }(name='deadLetterQueue')
-      }(name='runOptions')
-    }
-  ](name='eventTargets')
+  eventTargets?: [ EventTarget ](name='eventTargets')
 }
 
 model UpdateEventTargetsResponseBody = {
@@ -2862,36 +2843,36 @@ async function listEventTargets(request: ListEventTargetsRequest): ListEventTarg
     * listEventTypes *
 */
 
-model listEventTypesRequest {
+model ListEventTypesRequest {
   eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
   eventSourceName?: string(name='eventSourceName', description='EventSource is required for querying default bus events.', example='testEventSourceName'),
   maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
   nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
 }
 
-model listEventTypesResponseBody = {
+model ListEventTypesResponseBody = {
   eventTypes?: [
     {
       eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
       eventSourceName?: string(name='eventSourceName', description='EventSource is required for querying default bus events.', example='testEventSourceName'),
       eventTypeName?: string(name='eventTypeName', description='The name of the event type.'),
       description?: string(name='description', description='The description of the event type.', example='The description of the event type.'),
-      gmtCreate?: $Date(name='gmtCreate'),
-      gmtModify?: $Date(name='gmtModify')
+      gmtCreate?: string(name='gmtCreate'),
+      gmtModify?: string(name='gmtModify')
     }
   ](name='eventTypes'),
   nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='10'),
   total?: integer(name='total', description='The total number of entries.', example='2'),
-  maxResults?: int32(name="maxResults", description='If you set Limit and excess return values exist, this parameter is returned.', example='10')
+  maxResults?: int32(name="maxResults", description='If you set Limit and excess return values exist, this parameter is returned.', example='10'),
   code?: string(name='code', description='The status code returned. The status code 200 indicates that the request was successful.', example='200'),
   message?: string(name='message', description='The error message that is returned if the request failed.', example='EventBusNotExist'),
   requestId?: string(name='requestId', description='The request ID.', example='580A938B-6107-586C-8EC7-F22EEBEDA9E6'),
 }
 
-model listEventTypesResponse = {
+model ListEventTypesResponse = {
   headers?: map[string]string(name='headers'),
   statusCode?: int32(name='statusCode'),
-  body?: listEventTypesResponseBody(name='body'),
+  body?: ListEventTypesResponseBody(name='body'),
 }
 
 /**
@@ -2899,11 +2880,11 @@ model listEventTypesResponse = {
  *
  * @description You can call this API operation to query all event buses.
  *
- * @param request listEventTypesRequest
+ * @param request ListEventTypesRequest
  * @param runtime runtime options for this request RuntimeOptions
- * @return listEventTypesResponse
+ * @return ListEventTypesResponse
  */
-async function listEventTypesWithOptions(request: listEventTypesRequest, runtime: Util.RuntimeOptions): listEventTypesResponse {
+async function listEventTypesWithOptions(request: ListEventTypesRequest, runtime: Util.RuntimeOptions): ListEventTypesResponse {
   Util.validateModel(request);
   var body : map[string]any = {};
   if (!Util.isUnset(request.eventBusName)) {
@@ -2941,10 +2922,10 @@ async function listEventTypesWithOptions(request: listEventTypesRequest, runtime
  *
  * @description You can call this API operation to query all event buses.
  *
- * @param request listEventTypesRequest
- * @return listEventTypesResponse
+ * @param request ListEventTypesRequest
+ * @return ListEventTypesResponse
  */
-async function listEventTypes(request: listEventTypesRequest): listEventTypesResponse {
+async function listEventTypes(request: ListEventTypesRequest): ListEventTypesResponse {
   var runtime = new Util.RuntimeOptions{};
   return listEventTypesWithOptions(request, runtime);
 }

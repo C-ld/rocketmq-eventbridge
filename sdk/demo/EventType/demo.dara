@@ -21,9 +21,11 @@ init(){
 */
 
 async function testListEventTypes(): void {
-    var request = new SDKClient.listEventTypesRequest{
+    var request = new SDKClient.ListEventTypesRequest{
         eventBusName = 'newBus',
-        eventSourceName = 'newSource'
+        eventSourceName = 'newSource',
+        maxResults = 10,
+        nextToken = "0"
     };
 
     try {

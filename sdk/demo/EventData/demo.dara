@@ -21,9 +21,9 @@ init(){
 */
 
 async function testPutEvents(): void {
-    var request = new SDKClient.putEventsRequest{
+    var request = new SDKClient.PutEventsRequest{
         eventBusName = 'demo-bus',
-        description = 'an event for API test'
+        event = 'an event for API test'
     };
 
     try {

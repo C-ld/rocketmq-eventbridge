@@ -28,18 +28,46 @@ async function testCreateEventTargets(): void {
         eventBusName = 'newBus',
         eventRuleName = 'newRule',
         eventTargets = [
-            {
-                eventTargetName = 'new-file-target',
-                className = 'http',
+            new SDKClient.EventTarget{
+                eventTargetName = 'newTarget',
+                className = 'file',
                 config = {
-                    fileName = "~/newTarget",
+                    fileName = "~/Target",
                     line = "{    \"form\":\"JSONPATH\",    \"value\":\"$.data\"}"
+                },
+                runOptions = {
+                    errorsTolerance = "",
+                    retryStrategy = {
+                        pushRetryStrategy = "",
+                        maximumEventAgeInSeconds = 100,
+                        maximumRetryAttempts = 100
+                    },
+                    deadLetterQueue = {
+                        type = "",
+                        config = {}
+                    }
                 }
             },
-            {
-                eventTargetName = 'target2',
-                className = 'acs.eventbridge',
-            },
+            new SDKClient.EventTarget{
+                eventTargetName = 'newTarget222',
+                className = 'file',
+                config = {
+                    fileName = "~/Target222",
+                    line = "{    \"form\":\"JSONPATH\",    \"value\":\"$.data\"}"
+                },
+                runOptions = {
+                    errorsTolerance = "",
+                    retryStrategy = {
+                        pushRetryStrategy = "",
+                        maximumEventAgeInSeconds = 100,
+                        maximumRetryAttempts = 100
+                    },
+                    deadLetterQueue = {
+                        type = "",
+                        config = {}
+                    }
+                }
+            }
         ]
     };
 
@@ -60,18 +88,22 @@ async function testUpdateEventTargets(): void {
         eventBusName = 'newBus',
         eventRuleName = 'newRule',
         eventTargets = [
-            {
-                eventTargetName = 'new-file-target',
-                className = '**file**',
+            new SDKClient.EventTarget{
+                eventTargetName = 'newTarget',
+                className = 'file',
                 config = {
-                    fileName = "~/newTarget2",
+                    fileName = "~/newTarget",
                     line = "{    \"form\":\"JSONPATH\",    \"value\":\"$.data\"}"
                 }
             },
-            {
-                eventTargetName = 'target2',
-                className = 'http',
-            },
+            new SDKClient.EventTarget{
+                eventTargetName = 'newTarget222',
+                className = 'file',
+                config = {
+                    fileName = "~/newTarget222",
+                    line = "{    \"form\":\"JSONPATH\",    \"value\":\"$.data\"}"
+                }
+            }
         ]
     };
 
@@ -91,7 +123,7 @@ async function testDeleteEventTargets(): void {
     var request = new SDKClient.DeleteEventTargetsRequest{
         eventBusName = 'newBus',
         eventRuleName = 'newRule',
-        eventTargetNames = ["new-file-target", "target2"]
+        eventTargetNames = ["newTarget", "newTarget222"]
     };
 
     try {

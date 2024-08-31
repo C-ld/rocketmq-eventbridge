@@ -20,24 +20,6 @@ public class ListEventBusesResponseBody extends TeaModel {
     public java.util.List<ListEventBusesResponseBodyEventBuses> eventBuses;
 
     /**
-     * <p>If excess return values exist, this parameter is returned.</p>
-     * 
-     * <strong>example:</strong>
-     * <p>10</p>
-     */
-    @NameInMap("nextToken")
-    public String nextToken;
-
-    /**
-     * <p>The total number of entries.</p>
-     * 
-     * <strong>example:</strong>
-     * <p>2</p>
-     */
-    @NameInMap("total")
-    public Integer total;
-
-    /**
      * <p>The returned error message.</p>
      * 
      * <strong>example:</strong>
@@ -54,6 +36,24 @@ public class ListEventBusesResponseBody extends TeaModel {
      */
     @NameInMap("requestId")
     public String requestId;
+
+    /**
+     * <p>If excess return values exist, this parameter is returned.</p>
+     * 
+     * <strong>example:</strong>
+     * <p>10</p>
+     */
+    @NameInMap("nextToken")
+    public String nextToken;
+
+    /**
+     * <p>The total number of entries.</p>
+     * 
+     * <strong>example:</strong>
+     * <p>2</p>
+     */
+    @NameInMap("total")
+    public Integer total;
 
     /**
      * <p>If you set Limit and excess return values exist, this parameter is returned.</p>
@@ -85,22 +85,6 @@ public class ListEventBusesResponseBody extends TeaModel {
         return this.eventBuses;
     }
 
-    public ListEventBusesResponseBody setNextToken(String nextToken) {
-        this.nextToken = nextToken;
-        return this;
-    }
-    public String getNextToken() {
-        return this.nextToken;
-    }
-
-    public ListEventBusesResponseBody setTotal(Integer total) {
-        this.total = total;
-        return this;
-    }
-    public Integer getTotal() {
-        return this.total;
-    }
-
     public ListEventBusesResponseBody setMessage(String message) {
         this.message = message;
         return this;
@@ -115,6 +99,22 @@ public class ListEventBusesResponseBody extends TeaModel {
     }
     public String getRequestId() {
         return this.requestId;
+    }
+
+    public ListEventBusesResponseBody setNextToken(String nextToken) {
+        this.nextToken = nextToken;
+        return this;
+    }
+    public String getNextToken() {
+        return this.nextToken;
+    }
+
+    public ListEventBusesResponseBody setTotal(Integer total) {
+        this.total = total;
+        return this;
+    }
+    public Integer getTotal() {
+        return this.total;
     }
 
     public ListEventBusesResponseBody setMaxResults(Integer maxResults) {

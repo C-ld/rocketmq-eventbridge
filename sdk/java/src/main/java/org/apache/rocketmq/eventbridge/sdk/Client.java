@@ -873,10 +873,10 @@ public class Client extends com.aliyun.teaopenapi.Client {
 
     /**
      * <b>description</b> :
-     * <p>You can call this API operation to query connections.</p>
+     * <p>You can call this API operation to list connections.</p>
      * 
      * <b>summary</b> : 
-     * <p>Queries connections.</p>
+     * <p>list connections.</p>
      * 
      * @param request ListConnectionsRequest
      * @return ListConnectionsResponse
@@ -912,5 +912,1065 @@ public class Client extends com.aliyun.teaopenapi.Client {
             new TeaPair("bodyType", "json")
         ));
         return TeaModel.toModel(this.callApi(params, req, runtime), new ListEnumsResponseResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the content of an event.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the content of an event.</p>
+     * 
+     * @param request PutEventsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return PutEventsResponse
+     */
+    public PutEventsResponse putEventsWithOptions(PutEventsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, String> headers = TeaConverter.buildMap(
+            new TeaPair("Content-Type", "application/json; charset=UTF-8"),
+            new TeaPair("ce-specversion", "1.0"),
+            new TeaPair("ce-type", "com.github.pull_request.opened"),
+            new TeaPair("ce-source", "https://github.com/cloudevents/spec/pull"),
+            new TeaPair("ce-subject", "demo"),
+            new TeaPair("ce-id", "1234-1234-1234"),
+            new TeaPair("ce-datacontenttype", "application/json"),
+            new TeaPair("ce-time", "2024-07-01T17:31:00Z"),
+            new TeaPair("ce-eventbusname", "demo-bus")
+        );
+        String body = "{}";
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            headers.put("ce-eventbusname", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.event)) {
+            body = request.event;
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", body),
+            new TeaPair("headers", headers)
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "putEvents"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/putEvents"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new PutEventsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query the content of an event.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries the content of an event.</p>
+     * 
+     * @param request PutEventsRequest
+     * @return PutEventsResponse
+     */
+    public PutEventsResponse putEvents(PutEventsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.putEventsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an event rule.</p>
+     * 
+     * @param request CreateEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return CreateEventRuleResponse
+     */
+    public CreateEventRuleResponse createEventRuleWithOptions(CreateEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.filterPattern)) {
+            body.put("filterPattern", request.filterPattern);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "CreateEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/createEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new CreateEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an event rule.</p>
+     * 
+     * @param request CreateEventRuleRequest
+     * @return CreateEventRuleResponse
+     */
+    public CreateEventRuleResponse createEventRule(CreateEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.createEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to get an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Gets an event rule.</p>
+     * 
+     * @param request GetEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return GetEventRuleResponse
+     */
+    public GetEventRuleResponse getEventRuleWithOptions(GetEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "GetEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/getEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new GetEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to get an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Gets an event rule.</p>
+     * 
+     * @param request GetEventRuleRequest
+     * @return GetEventRuleResponse
+     */
+    public GetEventRuleResponse getEventRule(GetEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.getEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to delete an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an event rule.</p>
+     * 
+     * @param request DeleteEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DeleteEventRuleResponse
+     */
+    public DeleteEventRuleResponse deleteEventRuleWithOptions(DeleteEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DeleteEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/deleteEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DeleteEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to delete an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an event rule.</p>
+     * 
+     * @param request DeleteEventRuleRequest
+     * @return DeleteEventRuleResponse
+     */
+    public DeleteEventRuleResponse deleteEventRule(DeleteEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.deleteEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an event rule.</p>
+     * 
+     * @param request UpdateEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return UpdateEventRuleResponse
+     */
+    public UpdateEventRuleResponse updateEventRuleWithOptions(UpdateEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.filterPattern)) {
+            body.put("filterPattern", request.filterPattern);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "UpdateEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/updateEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new UpdateEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an event rule.</p>
+     * 
+     * @param request UpdateEventRuleRequest
+     * @return UpdateEventRuleResponse
+     */
+    public UpdateEventRuleResponse updateEventRule(UpdateEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.updateEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to list event rules.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event rules.</p>
+     * 
+     * @param request ListEventRulesRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListEventRulesResponse
+     */
+    public ListEventRulesResponse listEventRulesWithOptions(ListEventRulesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
+            body.put("maxResults", request.maxResults);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
+            body.put("nextToken", request.nextToken);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "ListEventRules"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/listEventRules"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListEventRulesResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to list event rules.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event rules.</p>
+     * 
+     * @param request ListEventRulesRequest
+     * @return ListEventRulesResponse
+     */
+    public ListEventRulesResponse listEventRules(ListEventRulesRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listEventRulesWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to enable an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Enables an event rule.</p>
+     * 
+     * @param request EnableEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return EnableEventRuleResponse
+     */
+    public EnableEventRuleResponse enableEventRuleWithOptions(EnableEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "EnableEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/enableEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new EnableEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to enable an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Enables an event rule.</p>
+     * 
+     * @param request EnableEventRuleRequest
+     * @return EnableEventRuleResponse
+     */
+    public EnableEventRuleResponse enableEventRule(EnableEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.enableEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to disable an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Disables an event rule.</p>
+     * 
+     * @param request DisableEventRuleRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DisableEventRuleResponse
+     */
+    public DisableEventRuleResponse disableEventRuleWithOptions(DisableEventRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DisableEventRule"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/rule/disableEventRule"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DisableEventRuleResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to disable an event rule.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Disables an event rule.</p>
+     * 
+     * @param request DisableEventRuleRequest
+     * @return DisableEventRuleResponse
+     */
+    public DisableEventRuleResponse disableEventRule(DisableEventRuleRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.disableEventRuleWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an event source.</p>
+     * 
+     * @param request CreateEventSourceRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return CreateEventSourceResponse
+     */
+    public CreateEventSourceResponse createEventSourceWithOptions(CreateEventSourceRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceName)) {
+            body.put("eventSourceName", request.eventSourceName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.className)) {
+            body.put("className", request.className);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.config)) {
+            body.put("config", request.config);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "CreateEventSource"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/source/createEventSource"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new CreateEventSourceResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates an event source.</p>
+     * 
+     * @param request CreateEventSourceRequest
+     * @return CreateEventSourceResponse
+     */
+    public CreateEventSourceResponse createEventSource(CreateEventSourceRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.createEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an event source.</p>
+     * 
+     * @param request UpdateEventSourceRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return UpdateEventSourceResponse
+     */
+    public UpdateEventSourceResponse updateEventSourceWithOptions(UpdateEventSourceRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceName)) {
+            body.put("eventSourceName", request.eventSourceName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.description)) {
+            body.put("description", request.description);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.className)) {
+            body.put("className", request.className);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.status)) {
+            body.put("status", request.status);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.config)) {
+            body.put("config", request.config);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "UpdateEventSource"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/source/updateEventSource"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new UpdateEventSourceResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates an event source.</p>
+     * 
+     * @param request UpdateEventSourceRequest
+     * @return UpdateEventSourceResponse
+     */
+    public UpdateEventSourceResponse updateEventSource(UpdateEventSourceRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.updateEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an event source.</p>
+     * 
+     * @param request DeleteEventSourceRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DeleteEventSourceResponse
+     */
+    public DeleteEventSourceResponse deleteEventSourceWithOptions(DeleteEventSourceRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceName)) {
+            body.put("eventSourceName", request.eventSourceName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DeleteEventSource"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/source/deleteEventSource"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DeleteEventSourceResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to delete an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes an event source.</p>
+     * 
+     * @param request DeleteEventSourceRequest
+     * @return DeleteEventSourceResponse
+     */
+    public DeleteEventSourceResponse deleteEventSource(DeleteEventSourceRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.deleteEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to get an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Gets an event source.</p>
+     * 
+     * @param request GetEventSourceRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return GetEventSourceResponse
+     */
+    public GetEventSourceResponse getEventSourceWithOptions(GetEventSourceRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceName)) {
+            body.put("eventSourceName", request.eventSourceName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "GetEventSource"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/source/getEventSource"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new GetEventSourceResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to get an event source.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Gets an event source.</p>
+     * 
+     * @param request GetEventSourceRequest
+     * @return GetEventSourceResponse
+     */
+    public GetEventSourceResponse getEventSource(GetEventSourceRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.getEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to list event sources.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event sources.</p>
+     * 
+     * @param request ListEventSourcesRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListEventSourcesResponse
+     */
+    public ListEventSourcesResponse listEventSourcesWithOptions(ListEventSourcesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceType)) {
+            body.put("eventSourceType", request.eventSourceType);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
+            body.put("maxResults", request.maxResults);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
+            body.put("nextToken", request.nextToken);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "ListEventSources"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/source/listEventSources"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListEventSourcesResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to list event sources.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event sources.</p>
+     * 
+     * @param request ListEventSourcesRequest
+     * @return ListEventSourcesResponse
+     */
+    public ListEventSourcesResponse listEventSources(ListEventSourcesRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listEventSourcesWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates event targets.</p>
+     * 
+     * @param request CreateEventTargetsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return CreateEventTargetsResponse
+     */
+    public CreateEventTargetsResponse createEventTargetsWithOptions(CreateEventTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventTargets)) {
+            body.put("eventTargets", request.eventTargets);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "CreateEventTargets"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/target/createEventTargets"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new CreateEventTargetsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to create event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Creates event targets.</p>
+     * 
+     * @param request CreateEventTargetsRequest
+     * @return CreateEventTargetsResponse
+     */
+    public CreateEventTargetsResponse createEventTargets(CreateEventTargetsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.createEventTargetsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates event targets.</p>
+     * 
+     * @param request UpdateEventTargetsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return UpdateEventTargetsResponse
+     */
+    public UpdateEventTargetsResponse updateEventTargetsWithOptions(UpdateEventTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventTargets)) {
+            body.put("eventTargets", request.eventTargets);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "UpdateEventTargets"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/target/updateEventTargets"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new UpdateEventTargetsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to update event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Updates event targets.</p>
+     * 
+     * @param request UpdateEventTargetsRequest
+     * @return UpdateEventTargetsResponse
+     */
+    public UpdateEventTargetsResponse updateEventTargets(UpdateEventTargetsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.updateEventTargetsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to delete event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes event targets.</p>
+     * 
+     * @param request DeleteEventTargetsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return DeleteEventTargetsResponse
+     */
+    public DeleteEventTargetsResponse deleteEventTargetsWithOptions(DeleteEventTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventTargetNames)) {
+            body.put("eventTargetNames", request.eventTargetNames);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "DeleteEventTargets"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/target/deleteEventTargets"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new DeleteEventTargetsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to delete event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Deletes event targets.</p>
+     * 
+     * @param request DeleteEventTargetsRequest
+     * @return DeleteEventTargetsResponse
+     */
+    public DeleteEventTargetsResponse deleteEventTargets(DeleteEventTargetsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.deleteEventTargetsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to list event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event targets.</p>
+     * 
+     * @param request ListEventTargetsRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListEventTargetsResponse
+     */
+    public ListEventTargetsResponse listEventTargetsWithOptions(ListEventTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventRuleName)) {
+            body.put("eventRuleName", request.eventRuleName);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "ListEventTargets"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/target/listEventTargets"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListEventTargetsResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this operation to list event targets.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Lists event targets.</p>
+     * 
+     * @param request ListEventTargetsRequest
+     * @return ListEventTargetsResponse
+     */
+    public ListEventTargetsResponse listEventTargets(ListEventTargetsRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listEventTargetsWithOptions(request, runtime);
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query all event buses.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries all event buses.</p>
+     * 
+     * @param request ListEventTypesRequest
+     * @param runtime runtime options for this request RuntimeOptions
+     * @return ListEventTypesResponse
+     */
+    public ListEventTypesResponse listEventTypesWithOptions(ListEventTypesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) throws Exception {
+        com.aliyun.teautil.Common.validateModel(request);
+        java.util.Map<String, Object> body = new java.util.HashMap<>();
+        if (!com.aliyun.teautil.Common.isUnset(request.eventBusName)) {
+            body.put("eventBusName", request.eventBusName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.eventSourceName)) {
+            body.put("eventSourceName", request.eventSourceName);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.maxResults)) {
+            body.put("maxResults", request.maxResults);
+        }
+
+        if (!com.aliyun.teautil.Common.isUnset(request.nextToken)) {
+            body.put("nextToken", request.nextToken);
+        }
+
+        com.aliyun.teaopenapi.models.OpenApiRequest req = com.aliyun.teaopenapi.models.OpenApiRequest.build(TeaConverter.buildMap(
+            new TeaPair("body", com.aliyun.teautil.Common.toJSONString(body))
+        ));
+        com.aliyun.teaopenapi.models.Params params = com.aliyun.teaopenapi.models.Params.build(TeaConverter.buildMap(
+            new TeaPair("action", "listEventTypes"),
+            new TeaPair("version", "2024-07-01"),
+            new TeaPair("protocol", "HTTP"),
+            new TeaPair("pathname", "/type/listEventTypes"),
+            new TeaPair("method", "POST"),
+            new TeaPair("authType", "Anonymous"),
+            new TeaPair("style", "RPC"),
+            new TeaPair("reqBodyType", "json"),
+            new TeaPair("bodyType", "json")
+        ));
+        return TeaModel.toModel(this.callApi(params, req, runtime), new ListEventTypesResponse());
+    }
+
+    /**
+     * <b>description</b> :
+     * <p>You can call this API operation to query all event buses.</p>
+     * 
+     * <b>summary</b> : 
+     * <p>Queries all event buses.</p>
+     * 
+     * @param request ListEventTypesRequest
+     * @return ListEventTypesResponse
+     */
+    public ListEventTypesResponse listEventTypes(ListEventTypesRequest request) throws Exception {
+        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        return this.listEventTypesWithOptions(request, runtime);
     }
 }
