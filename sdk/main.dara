@@ -199,10 +199,10 @@ model ListEventBusesResponseBody {
       eventBusName?: string(name='eventBusName', description='The name of the queried event bus.', example='default'),
     }
   ](name='eventBuses', description='The timestamp that indicates when the event bus was created.'),
-  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='10'),
-  total?: int32(name='total', description='The total number of entries.', example='2'),
   message?: string(name='message', description='The returned error message.', example='InvalidArgument'),
   requestId?: string(name='requestId', description='The request ID.', example='D1DCF64A-3F2C-5323-ADCB-3F4DF30FAD2D'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='10'),
+  total?: integer(name='total', description='The total number of entries.', example='2'),
   maxResults?: int32(name="maxResults", description='If you set Limit and excess return values exist, this parameter is returned.', example='10')
 }
 
@@ -680,7 +680,7 @@ async function deleteApiDestination(request: DeleteApiDestinationRequest): Delet
 model ListApiDestinationsRequest {
   apiDestinationNamePrefix?: string(name='apiDestinationNamePrefix', description='The prefix of the API destination name.', example='api-demo'),
   connectionName?: string(name='connectionName', description='The connection name.', example='connection-name'),
-  maxResults?: integer(name='maxResults', description='The maximum number of entries to be returned in a call. You can use this parameter and NextToken to implement paging. \n
+  maxResults?: int32(name='maxResults', description='The maximum number of entries to be returned in a call. You can use this parameter and NextToken to implement paging. \n
     *   Default value: 10.', example='10'),
   nextToken?: string(name='nextToken', description='If you set Limit and excess return values exist, this parameter is returned.\n
     *   Default value: 0.', example='0'),
@@ -717,9 +717,9 @@ model ListApiDestinationsResponseBody = {
       invocationRateLimitPerSecond?: integer(name="invocationRateLimitPerSecond", description="TODO")
     }
   ](name='apiDestinations', description='The API destinations.'),
-  maxResults?: float(name='maxResults', description='The maximum number of entries returned per page.', example='10'),
+  maxResults?: int32(name='maxResults', description='The maximum number of entries returned per page.', example='10'),
   nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='1'),
-  total?: float(name='total', description='The total number of entries returned.', example='2'),
+  total?: integer(name='total', description='The total number of entries returned.', example='2'),
   message?: string(name='message', description='The returned message. If the request is successful, success is returned. If the request failed, an error code is returned.', example='success'),
   requestId?: string(name='requestId', description='The request ID.', example='96D7C0AB-DCE5-5E82-96B8-4725E1706BB1'),
 }
@@ -1306,7 +1306,7 @@ async function selectOneConnection(request: GetConnectionRequest): GetConnection
 
 model ListConnectionsRequest {
   connectionNamePrefix?: string(name='connectionNamePrefix', description='The key word that you specify to query connections. Connections can be queried by prefixes.', example='connection-name'),
-  maxResults?: integer(name='maxResults', description='The maximum number of entries to be returned in a single call. You can use this parameter and the NextToken parameter to implement paging.\n
+  maxResults?: int32(name='maxResults', description='The maximum number of entries to be returned in a single call. You can use this parameter and the NextToken parameter to implement paging.\n
     *   Default value: 10.', example='10'),
   nextToken?: string(name='nextToken', description='If you set the Limit parameter and excess return values exist, this parameter is returned.\n
     *   Default value: 0.', example='0'),
@@ -1382,9 +1382,9 @@ model ListConnectionsResponseBody = {
       }(name='networkParameters'),
     }
   ](name='connections', description='The value of the key in the request path.'),
-  maxResults?: float(name='maxResults', description='The number of entries returned per page.', example='10'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
   nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
-  total?: float(name='total', description='The total number of entries returned.', example='1'),
+  total?: integer(name='total', description='The total number of entries returned.', example='1'),
   message?: string(name='message', description='The message returned.', example='success'),
   requestId?: string(name='requestId', description='The ID of the request. This parameter is a common parameter. Each request has a unique ID. You can use the ID to troubleshoot issues.', example='E3619976-8714-5D88-BBA2-6983D798A8BB'),
 }
@@ -1498,6 +1498,1453 @@ async function listEnumsResponse(): ListEnumsResponseResponse {
   return callApi(params, req, runtime);
 }
 
-// static async function main(args: [string]): void{
-//   var runtime = new Util.RuntimeOptions{};
-// }
+/**
+  EventData Controller apis:
+    * putEvents 
+*/
+
+model putEventsRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
+  event?: string(name='event', description='The content of the event.', example='The description of the event.'),
+}
+
+model putEventsResponseBody = {
+  failedEntryCount?: integer(name='failedEntryCount'),
+  entryList?: [
+    {
+      eventId?: string(name='eventId', description='The event ID.', example='a5747e4f-2af2-40b6-b262-d0140e995bf7'),
+      errorCode?: string(name='errorCode', description='The returned error code.'),
+      errorMessage?: string(name='errorMessage', description='The returned error message.'),
+    }
+  ](name='entryList'),
+  code?: string(name='code', description='The status code returned. The status code 200 indicates that the request was successful.', example='200'),
+  message?: string(name='message', description='The error message that is returned if the request failed.', example='EventBusNotExist'),
+  requestId?: string(name='requestId', description='The request ID.', example='580A938B-6107-586C-8EC7-F22EEBEDA9E6'),
+}
+
+model putEventsResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: putEventsResponseBody(name='body'),
+}
+
+/**
+ * @summary Queries the content of an event.
+ *
+ * @description You can call this API operation to query the content of an event.
+ *
+ * @param request putEventsRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return QueryEventResponse
+ */
+async function putEventsWithOptions(request: putEventsRequest, runtime: Util.RuntimeOptions): putEventsResponse {
+  Util.validateModel(request);
+  var headers : map[string]any = {
+    Content-Type = "application/json; charset=UTF-8",
+    ce-specversion = "1.0",
+    ce-type = "com.github.pull_request.opened",
+    ce-source = "https://github.com/cloudevents/spec/pull",
+    ce-subject = "demo",
+    ce-id = "1234-1234-1234",
+    ce-datacontenttype = "application/json",
+    ce-time = "2024-07-01T17:31:00Z",
+    ce-eventbusname = "demo-bus"
+  };
+  var body : string = "{}";
+  if (!Util.isUnset(request.eventBusName)) {
+    headers['ce-eventbusname'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.event)) {
+    body = request.event;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = body,
+  };
+  var params = new OpenApi.Params{
+    action = 'putEvents',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/putEvents',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Queries the content of an event.
+ *
+ * @description You can call this API operation to query the content of an event.
+ *
+ * @param request putEventsRequest
+ * @return putEventsResponse
+ */
+async function putEvents(request: putEventsRequest): QueryEventResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return putEventsWithOptions(request, runtime);
+}
+
+/**
+  EventRule Controller apis:
+    * createEventRule  *
+    * getEventRule     *
+    * deleteEventRule  *
+    * updateEventRule  *
+    * listEventRules   *
+    * enableEventRule  *
+    * disableEventRule *
+*/
+
+model CreateEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  description?: string(name='description'),
+  filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
+    You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
+}
+
+model CreateEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.', example='myrabbitmq.sourc'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model CreateEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: CreateEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Creates an event rule.
+ *
+ * @description You can call this operation to create an event rule.
+ *
+ * @param request CreateEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return CreateEventRuleResponse
+ */
+async function createEventRuleWithOptions(request: CreateEventRuleRequest, runtime: Util.RuntimeOptions): CreateEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  if (!Util.isUnset(request.description)) {
+    body['description'] = request.description;
+  }
+  if (!Util.isUnset(request.filterPattern)) {
+    body['filterPattern'] = request.filterPattern;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'CreateEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/createEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Creates an event rule.
+ *
+ * @description You can call this operation to create an event rule.
+ *
+ * @param request CreateEventRuleRequest
+ * @return CreateEventRuleResponse
+ */
+async function createEventRule(request: CreateEventRuleRequest): CreateEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventRuleWithOptions(request, runtime);
+}
+
+model GetEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+}
+
+model GetEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  description?: string(name='description'),
+  filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
+    You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
+  status?: string(name='status', description='The status of the event rule. Valid values: ENABLE (default): The event rule is enabled. DISABLE: The event rule is disabled.', example='ENABLE'),
+  gmtCreate?: $Date(name='gmtCreate'),
+  gmtModify?: $Date(name='gmtModify'),
+  eventTargets?: [
+    {
+      eventTargetName?: string(name='eventTargetName'),
+      className?: string(name='className'),
+      config?: map[string]any (name='config'),
+      runOptions?: {
+        errorsTolerance?: string(name='errorsTolerance'),
+        retryStrategy?: {
+          pushRetryStrategy?: string(name='pushRetryStrategy'),
+          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
+          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
+        }(name='retryStrategy'),
+        deadLetterQueue?: {
+          type?: string(name='type'),
+          config?: map[string]any (name='config')
+        }(name='deadLetterQueue')
+      }(name='runOptions')
+    }
+  ](name='eventTargets'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model GetEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: GetEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Gets an event rule.
+ *
+ * @description You can call this operation to get an event rule.
+ *
+ * @param request GetEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return GetEventRuleResponse
+ */
+async function getEventRuleWithOptions(request: GetEventRuleRequest, runtime: Util.RuntimeOptions): GetEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'GetEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/getEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Gets an event rule.
+ *
+ * @description You can call this operation to get an event rule.
+ *
+ * @param request GetEventRuleRequest
+ * @return GetEventRuleResponse
+ */
+async function getEventRule(request: GetEventRuleRequest): GetEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventRuleWithOptions(request, runtime);
+}
+
+model DeleteEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+}
+
+model DeleteEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model DeleteEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: DeleteEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Deletes an event rule.
+ *
+ * @description You can call this operation to delete an event rule.
+ *
+ * @param request DeleteEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return DeleteEventRuleResponse
+ */
+async function deleteEventRuleWithOptions(request: DeleteEventRuleRequest, runtime: Util.RuntimeOptions): DeleteEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'DeleteEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/deleteEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Deletes an event rule.
+ *
+ * @description You can call this operation to delete an event rule.
+ *
+ * @param request DeleteEventRuleRequest
+ * @return DeleteEventRuleResponse
+ */
+async function deleteEventRule(request: DeleteEventRuleRequest): DeleteEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventRuleWithOptions(request, runtime);
+}
+
+model UpdateEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  description?: string(name='description'),
+  filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
+    You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
+}
+
+model UpdateEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model UpdateEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: UpdateEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Updates an event rule.
+ *
+ * @description You can call this operation to update an event rule.
+ *
+ * @param request UpdateEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return UpdateEventRuleResponse
+ */
+async function updateEventRuleWithOptions(request: UpdateEventRuleRequest, runtime: Util.RuntimeOptions): UpdateEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  if (!Util.isUnset(request.description)) {
+    body['description'] = request.description;
+  }
+  if (!Util.isUnset(request.filterPattern)) {
+    body['filterPattern'] = request.filterPattern;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'UpdateEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/updateEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Updates an event rule.
+ *
+ * @description You can call this operation to update an event rule.
+ *
+ * @param request UpdateEventRuleRequest
+ * @return UpdateEventRuleResponse
+ */
+async function updateEventRule(request: UpdateEventRuleRequest): UpdateEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventRuleWithOptions(request, runtime);
+}
+
+model ListEventRulesRequest {
+  eventBusName?: string(name='eventBusName'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
+}
+
+model ListEventRulesResponseBody{
+  eventRules?: [
+    {
+      eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+      eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+      description?: string(name='description'),
+      filterPattern?: string(name='filterPattern', description='The event pattern, in JSON format. Valid values: stringEqual and stringExpression. You can specify up to five expressions in the map data structure in each field.\n
+        You can specify up to five expressions in the map data structure in each field.', example='{\\"source\\": [{\\"prefix\\": \\"acs.\\"}],\\"type\\": [{\\"prefix\\":\\"oss:ObjectReplication\\"}],\\"subject\\":[{\\"prefix\\":\\"acs:oss:cn-hangzhou:123456789098****:my-movie-bucket/\\", \\"suffix\\":\\".txt\\"}]}'),
+      status?: string(name='status', description='The status of the event rule. Valid values: ENABLE (default): The event rule is enabled. DISABLE: The event rule is disabled.', example='ENABLE'),
+      gmtCreate?: $Date(name='gmtCreate'),
+      gmtModify?: $Date(name='gmtModify'),
+    }
+  ](name='eventRules'),
+  total?: integer(name='total', description='The total number of entries.', example='2'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
+}
+
+model ListEventRulesResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: ListEventRulesResponseBody(name='body'),
+}
+
+/**
+ * @summary Lists event rules.
+ *
+ * @description You can call this operation to list event rules.
+ *
+ * @param request ListEventRulesRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return ListEventRulesResponse
+ */
+async function listEventRulesWithOptions(request: ListEventRulesRequest, runtime: Util.RuntimeOptions): ListEventRulesResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.maxResults)) {
+    body['maxResults'] = request.maxResults;
+  }
+  if (!Util.isUnset(request.nextToken)) {
+    body['nextToken'] = request.nextToken;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'ListEventRules',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/listEventRules',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Lists event rules.
+ *
+ * @description You can call this operation to list event rules.
+ *
+ * @param request ListEventRulesRequest
+ * @return ListEventRulesResponse
+ */
+async function listEventRules(request: ListEventRulesRequest): ListEventRulesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventRulesWithOptions(request, runtime);
+}
+
+model EnableEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+}
+
+model EnableEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model EnableEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: EnableEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Enables an event rule.
+ *
+ * @description You can call this operation to enable an event rule.
+ *
+ * @param request EnableEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return EnableEventRuleResponse
+ */
+async function enableEventRuleWithOptions(request: EnableEventRuleRequest, runtime: Util.RuntimeOptions): EnableEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'EnableEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/enableEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Enables an event rule.
+ *
+ * @description You can call this operation to enable an event rule.
+ *
+ * @param request EnableEventRuleRequest
+ * @return EnableEventRuleResponse
+ */
+async function enableEventRule(request: EnableEventRuleRequest): EnableEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return enableEventRuleWithOptions(request, runtime);
+}
+
+model DisableEventRuleRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+}
+
+model DisableEventRuleResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model DisableEventRuleResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: DisableEventRuleResponseBody(name='body'),
+}
+
+/**
+ * @summary Disables an event rule.
+ *
+ * @description You can call this operation to disable an event rule.
+ *
+ * @param request DisableEventRuleRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return DisableEventRuleResponse
+ */
+async function disableEventRuleWithOptions(request: DisableEventRuleRequest, runtime: Util.RuntimeOptions): DisableEventRuleResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'DisableEventRule',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/rule/disableEventRule',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Disables an event rule.
+ *
+ * @description You can call this operation to disable an event rule.
+ *
+ * @param request DisableEventRuleRequest
+ * @return DisableEventRuleResponse
+ */
+async function disableEventRule(request: DisableEventRuleRequest): DisableEventRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return disableEventRuleWithOptions(request, runtime);
+}
+
+
+/**
+  EventSource Controller apis:
+    * createEventSource *
+    * updateEventSource *
+    * deleteEventSource *
+    * getEventSource    *
+    * listEventSources  *
+*/
+
+model CreateEventSourceRequest {
+  description?: string(name='description', description='The description of the event source.'),
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  className?: string(name='className'),
+  config?: map[string]any(name='config')
+}
+
+model CreateEventSourceResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.', example='myrabbitmq.sourc'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model CreateEventSourceResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: CreateEventSourceResponseBody(name='body'),
+}
+
+/**
+ * @summary Creates an event source.
+ *
+ * @description You can call this operation to create an event source.
+ *
+ * @param request CreateEventSourceRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return CreateEventSourceResponse
+ */
+async function createEventSourceWithOptions(request: CreateEventSourceRequest, runtime: Util.RuntimeOptions): CreateEventSourceResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.description)) {
+    body['description'] = request.description;
+  }
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceName)) {
+    body['eventSourceName'] = request.eventSourceName;
+  }
+  if (!Util.isUnset(request.className)) {
+    body['className'] = request.className;
+  }
+  if (!Util.isUnset(request.config)) {
+    body['config'] = request.config;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'CreateEventSource',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/source/createEventSource',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Creates an event source.
+ *
+ * @description You can call this operation to create an event source.
+ *
+ * @param request CreateEventSourceRequest
+ * @return CreateEventSourceResponse
+ */
+async function createEventSource(request: CreateEventSourceRequest): CreateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventSourceWithOptions(request, runtime);
+}
+
+model UpdateEventSourceRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  description?: string(name='description', description='The description of the event source.'),
+  className?: string(name='className'),
+  status?: integer(name="status"),
+  config?: map[string]any(name='config')
+}
+
+model UpdateEventSourceResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model UpdateEventSourceResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: UpdateEventSourceResponseBody(name='body'),
+}
+
+/**
+ * @summary Updates an event source.
+ *
+ * @description You can call this operation to update an event source.
+ *
+ * @param request UpdateEventSourceRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return UpdateEventSourceResponse
+ */
+async function updateEventSourceWithOptions(request: UpdateEventSourceRequest, runtime: Util.RuntimeOptions): UpdateEventSourceResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceName)) {
+    body['eventSourceName'] = request.eventSourceName;
+  }
+  if (!Util.isUnset(request.description)) {
+    body['description'] = request.description;
+  }
+  if (!Util.isUnset(request.className)) {
+    body['className'] = request.className;
+  }
+  if (!Util.isUnset(request.status)) {
+    body['status'] = request.status;
+  }
+  if (!Util.isUnset(request.config)) {
+    body['config'] = request.config;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'UpdateEventSource',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/source/updateEventSource',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Updates an event source.
+ *
+ * @description You can call this operation to update an event source.
+ *
+ * @param request UpdateEventSourceRequest
+ * @return UpdateEventSourceResponse
+ */
+async function updateEventSource(request: UpdateEventSourceRequest): UpdateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventSourceWithOptions(request, runtime);
+}
+
+model DeleteEventSourceRequest {
+  eventBusName?: string(name='eventBusName'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.\nThis parameter is required.', example='myrabbitmq.source'),
+}
+
+model DeleteEventSourceResponseBody = {
+  code?: string(name='code', description='The returned response code. The value Success indicates that the request is successful. Other values indicate that the request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [78B66E68-E778-1F33-84BD-xxxx], error code: [EventSourceNotExist], message: [The event source in request is not exist! ]'),
+  requestId?: string(name='requestId', description='The request ID.', example='5f80e9b3-98d5-4f51-8412-c758818a03e4'),
+}
+
+model DeleteEventSourceResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: DeleteEventSourceResponseBody(name='body'),
+}
+
+/**
+ * @summary Deletes an event source.
+ *
+ * @description You can call this API operation to delete an event source.
+ *
+ * @param request DeleteEventSourceRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return DeleteEventSourceResponse
+ */
+async function deleteEventSourceWithOptions(request: DeleteEventSourceRequest, runtime: Util.RuntimeOptions): DeleteEventSourceResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceName)) {
+    body['eventSourceName'] = request.eventSourceName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'DeleteEventSource',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/source/deleteEventSource',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Deletes an event source.
+ *
+ * @description You can call this API operation to delete an event source.
+ *
+ * @param request DeleteEventSourceRequest
+ * @return DeleteEventSourceResponse
+ */
+async function deleteEventSource(request: DeleteEventSourceRequest): DeleteEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventSourceWithOptions(request, runtime);
+}
+
+model GetEventSourceRequest {
+  eventBusName?: string(name='eventBusName'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.\nThis parameter is required.', example='myrabbitmq.source'),
+}
+
+model GetEventSourceResponseBody = {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event source is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventSourceName?: string(name='eventSourceName', description='The name of the event source.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  description?: string(name='description', description='The description of the event source.'),
+  className?: string(name='className'),
+  config?: map[string]any(name='config')
+}
+
+model GetEventSourceResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: GetEventSourceResponseBody(name='body'),
+}
+
+/**
+ * @summary Gets an event source.
+ *
+ * @description You can call this API operation to get an event source.
+ *
+ * @param request GetEventSourceRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return GetEventSourceResponse
+ */
+async function getEventSourceWithOptions(request: GetEventSourceRequest, runtime: Util.RuntimeOptions): GetEventSourceResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceName)) {
+    body['eventSourceName'] = request.eventSourceName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'GetEventSource',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/source/getEventSource',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Gets an event source.
+ *
+ * @description You can call this API operation to get an event source.
+ *
+ * @param request GetEventSourceRequest
+ * @return GetEventSourceResponse
+ */
+async function getEventSource(request: GetEventSourceRequest): GetEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventSourceWithOptions(request, runtime);
+}
+
+model ListEventSourcesRequest {
+  eventBusName?: string(name='eventBusName'),
+  eventSourceType?: string(name='eventSourceType', description='The type of the event source.\nThis parameter is required.', example='USER_DEFINED'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
+}
+
+model ListEventSourcesResponseBody = {
+  eventSources?: [
+    {
+      eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
+      eventSourceName?: string(name='eventSourceName', description='EventSource is required for querying default bus events.', example='testEventSourceName'),
+      description?: string(name='description', description='The description of the event type.', example='The description of the event type.'),
+      className?: string(name='className'),
+      config?: map[string]any(name='config'),
+      gmtCreate?: $Date(name='gmtCreate'),
+      gmtModify?: $Date(name='gmtModify')
+    }
+  ](name='eventSources'),
+  total?: integer(name='total', description='The total number of entries.', example='2'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
+}
+
+model ListEventSourcesResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: ListEventSourcesResponseBody(name='body'),
+}
+
+/**
+ * @summary Lists event sources.
+ *
+ * @description You can call this API operation to list event sources.
+ *
+ * @param request ListEventSourcesRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return ListEventSourcesResponse
+ */
+async function listEventSourcesWithOptions(request: ListEventSourcesRequest, runtime: Util.RuntimeOptions): ListEventSourcesResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceType)) {
+    body['eventSourceType'] = request.eventSourceType;
+  }
+  if (!Util.isUnset(request.maxResults)) {
+    body['maxResults'] = request.maxResults;
+  }
+  if (!Util.isUnset(request.nextToken)) {
+    body['nextToken'] = request.nextToken;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'ListEventSources',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/source/listEventSources',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Lists event sources.
+ *
+ * @description You can call this API operation to list event sources.
+ *
+ * @param request ListEventSourcesRequest
+ * @return ListEventSourcesResponse
+ */
+async function listEventSources(request: ListEventSourcesRequest): ListEventSourcesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventSourcesWithOptions(request, runtime);
+}
+
+/**
+  EventTarget Controller apis:
+    * createEventTargets *
+    * updateEventTargets *
+    * deleteEventTargets *
+    * listEventTargets   *
+*/
+
+model CreateEventTargetsRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  eventTargets?: [
+    {
+      eventTargetName?: string(name='eventTargetName'),
+      className?: string(name='className'),
+      config?: map[string]any (name='config'),
+      runOptions?: {
+        errorsTolerance?: string(name='errorsTolerance'),
+        retryStrategy?: {
+          pushRetryStrategy?: string(name='pushRetryStrategy'),
+          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
+          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
+        }(name='retryStrategy'),
+        deadLetterQueue?: {
+          type?: string(name='type'),
+          config?: map[string]any (name='config')
+        }(name='deadLetterQueue')
+      }(name='runOptions')
+    }
+  ](name='eventTargets')
+}
+
+model CreateEventTargetsResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model CreateEventTargetsResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: CreateEventTargetsResponseBody(name='body'),
+}
+
+/**
+ * @summary Creates event targets.
+ *
+ * @description You can call this operation to create event targets.
+ *
+ * @param request CreateEventTargetsRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return CreateEventTargetsResponse
+ */
+async function createEventTargetsWithOptions(request: CreateEventTargetsRequest, runtime: Util.RuntimeOptions): CreateEventTargetsResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  if (!Util.isUnset(request.eventTargets)) {
+    body['eventTargets'] = request.eventTargets;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'CreateEventTargets',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/target/createEventTargets',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Creates event targets.
+ *
+ * @description You can call this operation to create event targets.
+ *
+ * @param request CreateEventTargetsRequest
+ * @return CreateEventTargetsResponse
+ */
+async function createEventTargets(request: CreateEventTargetsRequest): CreateEventTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventTargetsWithOptions(request, runtime);
+}
+
+model UpdateEventTargetsRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  eventTargets?: [
+    {
+      eventTargetName?: string(name='eventTargetName'),
+      className?: string(name='className'),
+      config?: map[string]any (name='config'),
+      runOptions?: {
+        errorsTolerance?: string(name='errorsTolerance'),
+        retryStrategy?: {
+          pushRetryStrategy?: string(name='pushRetryStrategy'),
+          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
+          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
+        }(name='retryStrategy'),
+        deadLetterQueue?: {
+          type?: string(name='type'),
+          config?: map[string]any (name='config')
+        }(name='deadLetterQueue')
+      }(name='runOptions')
+    }
+  ](name='eventTargets')
+}
+
+model UpdateEventTargetsResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model UpdateEventTargetsResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: UpdateEventTargetsResponseBody(name='body'),
+}
+
+/**
+ * @summary Updates event targets.
+ *
+ * @description You can call this operation to update event targets.
+ *
+ * @param request UpdateEventTargetsRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return UpdateEventTargetsResponse
+ */
+async function updateEventTargetsWithOptions(request: UpdateEventTargetsRequest, runtime: Util.RuntimeOptions): UpdateEventTargetsResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  if (!Util.isUnset(request.eventTargets)) {
+    body['eventTargets'] = request.eventTargets;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'UpdateEventTargets',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/target/updateEventTargets',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Updates event targets.
+ *
+ * @description You can call this operation to update event targets.
+ *
+ * @param request UpdateEventTargetsRequest
+ * @return UpdateEventTargetsResponse
+ */
+async function updateEventTargets(request: UpdateEventTargetsRequest): UpdateEventTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventTargetsWithOptions(request, runtime);
+}
+
+model DeleteEventTargetsRequest {
+  eventBusName: string(name='eventBusName', description='The name of the event bus.', example='MyEventBus'),
+  eventRuleName: string(name='eventRuleName', description='The name of the event rule.', example='ramrolechange-mns'),
+  eventTargetNames?: [ string ](name='eventTargetNames', description='The names of the event targets that you want to delete.'),
+}
+
+model DeleteEventTargetsResponseBody = {
+  code?: string(name='code', description='The returned response code. Valid values:\n
+    *   Success: The request is successful.\n
+    *   Other codes: The request failed. For more information about error codes, see Error codes.', example='Success'),
+  message?: string(name='message', description='The returned error message.', example='Remote error. requestId: [A8EFABD2-95B9-1C46-9E01-xxxx], error code: [CreateRelatedResourceFailed], message: [Create related resource failed, EntityNotExist.Role : The role not exists: xxxx. \\\\r\\\\nRequestId : xxxx-168C-54ED-8FEB-BF11CB70AEB7]'),
+  requestId?: string(name='requestId', description='The request ID.', example='2922208e-e1c6-43ee-bfd1-aca50263bc8a'),
+}
+
+model DeleteEventTargetsResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: DeleteEventTargetsResponseBody(name='body'),
+}
+
+/**
+ * @summary Deletes event targets.
+ *
+ * @description You can call this operation to delete event targets.
+ *
+ * @param request DeleteEventTargetsRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return DeleteEventTargetsResponse
+ */
+async function deleteEventTargetsWithOptions(request: DeleteEventTargetsRequest, runtime: Util.RuntimeOptions): DeleteEventTargetsResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  if (!Util.isUnset(request.eventTargetNames)) {
+    body['eventTargetNames'] = request.eventTargetNames;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'DeleteEventTargets',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/target/deleteEventTargets',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Deletes event targets.
+ *
+ * @description You can call this operation to delete event targets.
+ *
+ * @param request DeleteEventTargetsRequest
+ * @return DeleteEventTargetsResponse
+ */
+async function deleteEventTargets(request: DeleteEventTargetsRequest): DeleteEventTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventTargetsWithOptions(request, runtime);
+}
+
+model ListEventTargetsRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+}
+
+model ListEventTargetsResponseBody {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus with which the event target is associated.\nThis parameter is required.', example='my-event-bus'),
+  eventRuleName?: string(name='eventRuleName', description='The name of the event rule.\nThis parameter is required.', example='myrabbitmq.sourc'),
+  eventTargets?: [
+    {
+      eventTargetName?: string(name='eventTargetName'),
+      className?: string(name='className'),
+      config?: map[string]any (name='config'),
+      runOptions?: {
+        errorsTolerance?: string(name='errorsTolerance'),
+        retryStrategy?: {
+          pushRetryStrategy?: string(name='pushRetryStrategy'),
+          maximumEventAgeInSeconds?: int32(name='maximumEventAgeInSeconds'),
+          maximumRetryAttempts?: int32(name='maximumRetryAttempts')
+        }(name='retryStrategy'),
+        deadLetterQueue?: {
+          type?: string(name='type'),
+          config?: map[string]any (name='config')
+        }(name='deadLetterQueue')
+      }(name='runOptions')
+    }
+  ](name='eventTargets')
+}
+
+model ListEventTargetsResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: ListEventTargetsResponseBody(name='body'),
+}
+
+/**
+ * @summary Lists event targets.
+ *
+ * @description You can call this operation to list event targets.
+ *
+ * @param request ListEventTargetsRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return ListEventTargetsResponse
+ */
+async function listEventTargetsWithOptions(request: ListEventTargetsRequest, runtime: Util.RuntimeOptions): ListEventTargetsResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventRuleName)) {
+    body['eventRuleName'] = request.eventRuleName;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body),
+  };
+  var params = new OpenApi.Params{
+    action = 'ListEventTargets',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/target/listEventTargets',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Lists event targets.
+ *
+ * @description You can call this operation to list event targets.
+ *
+ * @param request ListEventTargetsRequest
+ * @return ListEventTargetsResponse
+ */
+async function listEventTargets(request: ListEventTargetsRequest): ListEventTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventTargetsWithOptions(request, runtime);
+}
+
+
+/**
+  EventType Controller apis:
+    * listEventTypes *
+*/
+
+model listEventTypesRequest {
+  eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
+  eventSourceName?: string(name='eventSourceName', description='EventSource is required for querying default bus events.', example='testEventSourceName'),
+  maxResults?: int32(name='maxResults', description='The number of entries returned per page.', example='10'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='0'),
+}
+
+model listEventTypesResponseBody = {
+  eventTypes?: [
+    {
+      eventBusName?: string(name='eventBusName', description='The name of the event bus.\nThis parameter is required.', example='demo'),
+      eventSourceName?: string(name='eventSourceName', description='EventSource is required for querying default bus events.', example='testEventSourceName'),
+      eventTypeName?: string(name='eventTypeName', description='The name of the event type.'),
+      description?: string(name='description', description='The description of the event type.', example='The description of the event type.'),
+      gmtCreate?: $Date(name='gmtCreate'),
+      gmtModify?: $Date(name='gmtModify')
+    }
+  ](name='eventTypes'),
+  nextToken?: string(name='nextToken', description='If excess return values exist, this parameter is returned.', example='10'),
+  total?: integer(name='total', description='The total number of entries.', example='2'),
+  maxResults?: int32(name="maxResults", description='If you set Limit and excess return values exist, this parameter is returned.', example='10')
+  code?: string(name='code', description='The status code returned. The status code 200 indicates that the request was successful.', example='200'),
+  message?: string(name='message', description='The error message that is returned if the request failed.', example='EventBusNotExist'),
+  requestId?: string(name='requestId', description='The request ID.', example='580A938B-6107-586C-8EC7-F22EEBEDA9E6'),
+}
+
+model listEventTypesResponse = {
+  headers?: map[string]string(name='headers'),
+  statusCode?: int32(name='statusCode'),
+  body?: listEventTypesResponseBody(name='body'),
+}
+
+/**
+ * @summary Queries all event buses.
+ *
+ * @description You can call this API operation to query all event buses.
+ *
+ * @param request listEventTypesRequest
+ * @param runtime runtime options for this request RuntimeOptions
+ * @return listEventTypesResponse
+ */
+async function listEventTypesWithOptions(request: listEventTypesRequest, runtime: Util.RuntimeOptions): listEventTypesResponse {
+  Util.validateModel(request);
+  var body : map[string]any = {};
+  if (!Util.isUnset(request.eventBusName)) {
+    body['eventBusName'] = request.eventBusName;
+  }
+  if (!Util.isUnset(request.eventSourceName)) {
+    body['eventSourceName'] = request.eventSourceName;
+  }
+  if (!Util.isUnset(request.maxResults)) {
+    body['maxResults'] = request.maxResults;
+  }
+  if (!Util.isUnset(request.nextToken)) {
+    body['nextToken'] = request.nextToken;
+  }
+  var req = new OpenApi.OpenApiRequest{ 
+    body = Util.toJSONString(body)
+  };
+
+  var params = new OpenApi.Params{
+    action = 'listEventTypes',
+    version = '2024-07-01',
+    protocol = 'HTTP',
+    pathname = '/type/listEventTypes',
+    method = 'POST',
+    authType = 'Anonymous',
+    style = 'RPC',
+    reqBodyType = 'json',
+    bodyType = 'json',
+  };
+  return callApi(params, req, runtime);
+}
+
+/**
+ * @summary Queries all event buses.
+ *
+ * @description You can call this API operation to query all event buses.
+ *
+ * @param request listEventTypesRequest
+ * @return listEventTypesResponse
+ */
+async function listEventTypes(request: listEventTypesRequest): listEventTypesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventTypesWithOptions(request, runtime);
+}
