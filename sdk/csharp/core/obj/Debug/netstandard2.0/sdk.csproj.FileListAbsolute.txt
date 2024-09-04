@@ -1,0 +1,9 @@
+/root/rocketmq-eventbridge/sdk/csharp/core/bin/Debug/netstandard2.0/org.apache.rocketmq.eventbridge.deps.json
+/root/rocketmq-eventbridge/sdk/csharp/core/bin/Debug/netstandard2.0/org.apache.rocketmq.eventbridge.dll
+/root/rocketmq-eventbridge/sdk/csharp/core/bin/Debug/netstandard2.0/org.apache.rocketmq.eventbridge.pdb
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/sdk.csproj.AssemblyReference.cache
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/sdk.GeneratedMSBuildEditorConfig.editorconfig
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/sdk.csproj.CoreCompileInputs.cache
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/sdk.sourcelink.json
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/org.apache.rocketmq.eventbridge.dll
+/root/rocketmq-eventbridge/sdk/csharp/core/obj/Debug/netstandard2.0/org.apache.rocketmq.eventbridge.pdb

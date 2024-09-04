@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>org.apache.rocketmq.eventbridge</id>
+    <version>1.0.0</version>
+    <authors>org.apache.rocketmq.eventbridge</authors>
+    <description>open source eventbridge (20240701) SDK Library for .NET</description>
+    <repository type="git" commit="d1b8746cf4ff21d0036bb18bbcda8b88813046bf" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="AlibabaCloud.OpenApiClient" version="0.1.11" exclude="Build,Analyzers" />
+        <dependency id="AlibabaCloud.TeaUtil" version="0.1.19" exclude="Build,Analyzers" />
+        <dependency id="Tea" version="1.0.11" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="AlibabaCloud.OpenApiClient" version="0.1.11" exclude="Build,Analyzers" />
+        <dependency id="AlibabaCloud.TeaUtil" version="0.1.19" exclude="Build,Analyzers" />
+        <dependency id="Tea" version="1.0.11" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Security" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="/root/rocketmq-eventbridge/sdk/csharp/core/bin/Release/net45/org.apache.rocketmq.eventbridge.dll" target="lib/net45/org.apache.rocketmq.eventbridge.dll" />
+    <file src="/root/rocketmq-eventbridge/sdk/csharp/core/bin/Release/netstandard2.0/org.apache.rocketmq.eventbridge.dll" target="lib/netstandard2.0/org.apache.rocketmq.eventbridge.dll" />
+  </files>
+</package>

@@ -1,4 +1,4 @@
-# 生成Type版本sdk
+# 生成C#版本sdk
 
 生成条件：
 - darabonba 安装完成

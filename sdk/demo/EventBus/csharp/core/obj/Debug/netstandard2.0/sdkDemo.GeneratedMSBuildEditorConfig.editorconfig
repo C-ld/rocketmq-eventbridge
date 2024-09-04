@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = RocketMQ.Eventbridge.Demo
+build_property.ProjectDir = /root/rocketmq-eventbridge/sdk/demo/EventBus/cs/core/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

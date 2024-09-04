@@ -1,0 +1,5 @@
+is_global = true
+build_property.RootNamespace = RocketMQ.Eventbridge.SDK
+build_property.ProjectDir = /root/rocketmq-eventbridge/sdk/csharp/core/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
